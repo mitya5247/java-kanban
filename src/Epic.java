@@ -6,7 +6,7 @@ public class Epic extends Task {
     SubTask subTask;
     ArrayList<SubTask> subTasks = new ArrayList<>();
     HashMap<String, ArrayList> epicSubTaskMap= new HashMap<>();
-    HashMap<Integer, HashMap> epicMap = new HashMap<>();
+//    HashMap<Integer, HashMap> epicMap = new HashMap<>();
 
 
 

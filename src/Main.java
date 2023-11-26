@@ -10,5 +10,7 @@ public class Main {
 
         System.out.println("Список задач");
         managerTask.getListTasks();
+    //    managerTask.removeTask(2); // работает
+        managerTask.updateTask(2);
     }
 }

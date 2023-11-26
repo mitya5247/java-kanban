@@ -7,7 +7,7 @@ public class Task {
     String status = "NEW";
     String name;
     String description = null;
-    HashMap<Integer, String> taskMap = new HashMap<>();
+//    HashMap<Integer, String> taskMap = new HashMap<>();
 
     public Task(String name, String description) {
         this.name = name;
@@ -19,8 +19,8 @@ public class Task {
         return "Task='{" +
                 "status='" + status + '\'' +
                 "name='" + name + '\'' +
-                "description='" + description + '\'' +
-                "taskMap='" + taskMap + '\'' + '}';
+                "description='" + description + '\'' + '}';
+//                "taskMap='" + taskMap + '\'' + '}';
 
     }
 }

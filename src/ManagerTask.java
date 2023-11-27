@@ -83,12 +83,16 @@ public class ManagerTask {
         if (command == 3) {
             System.out.println("Введите id эпика, в который хотите добавить подзадачу");
             int id = scanner.nextInt();
-            System.out.println("Введите задачу");
-            String nameTask = scanner.next();
-            System.out.println("Введите описание задачи");
-            String taskDescription = scanner.next();
-            subTask = new SubTask(nameTask, taskDescription);
-            epicMap.get(id).subTasks.add(subTask);
+            if (epicMap.containsKey(id)) {
+                System.out.println("Введите задачу");
+                String nameTask = scanner.next();
+                System.out.println("Введите описание задачи");
+                String taskDescription = scanner.next();
+                subTask = new SubTask(nameTask, taskDescription);
+                epicMap.get(id).subTasks.add(subTask);
+            } else {
+                System.out.println("Эпика с таким id пока не существует");
+            }
         }
     }
 

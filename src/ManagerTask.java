@@ -11,8 +11,6 @@ public class ManagerTask {
     HashMap<Integer, String> taskMap = new HashMap<>();
     HashMap<Integer, HashMap> epicMap = new HashMap<>();
 
-//    ArrayList<Task> taskArray = new ArrayList<>();
-//    ArrayList<Epic> epicArray = new ArrayList<>();
     ArrayList<HashMap> taskArrayAll = new ArrayList<>();
 
     public ManagerTask() {
@@ -32,11 +30,27 @@ public class ManagerTask {
 
     }
 
-    void removeAllTasks() {}
+    void removeAllTasks() {
+        epicMap.clear();
+        taskMap.clear();
+        System.out.println("Все задачи удалены");
+        System.out.println(taskArrayAll);
+        System.out.println(taskMap);
+        System.out.println(epicMap);
 
-//    Task getTask(int id) {
-//        return false;
-//    }
+    }
+
+    Object getTask(int id) {
+        Object myHashMap = null;
+        for (HashMap hashMap : taskArrayAll) {
+            hashMap.get(id);
+            myHashMap = hashMap.get(id);
+            System.out.println("Мапа, которую вернули");
+            System.out.println(myHashMap);
+
+            }
+        return myHashMap;
+    }
 
     void createTask() {
         System.out.println("Выберите тип задачи: 1 - простая задача, 2 - эпик");
@@ -51,7 +65,6 @@ public class ManagerTask {
             taskMap.put(task.id, nameTask);
             System.out.println("Задача создана!");
             System.out.println(task);
-//            System.out.println(taskArray);
             }
 
         if (command == 2) {
@@ -65,20 +78,19 @@ public class ManagerTask {
             epicMap.put(epic.id, epic.epicSubTaskMap);
             System.out.println("Эпик создан!");
             System.out.println(epic);
-//            System.out.println(epicArray);
         }
     }
 
 
 
 
-    void updateTask(int id) {
+    void updateTask(int id, Task task) {
         for (HashMap hashMap : taskArrayAll) {
             if (hashMap.containsKey(id)) {
                 hashMap.get(id);
                 System.out.println("Введите что хотите обновить");
                 String newName = scanner.next();
-                hashMap.put(id, newName);
+                hashMap.put(id, task.name);
             } else {
                 System.out.println("Задачей с таким id не найдено");
             }

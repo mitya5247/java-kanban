@@ -5,12 +5,14 @@ public class Main {
         managerTask.createTask();
         managerTask.createTask();
         managerTask.createTask();
-        managerTask.createTask();
+
 
 
         System.out.println("Список задач");
         managerTask.getListTasks();
     //    managerTask.removeTask(2); // работает
-        managerTask.updateTask(2);
+    //    managerTask.updateTask(2);
+    //    managerTask.removeAllTasks();
+        managerTask.getTask(2);
     }
 }

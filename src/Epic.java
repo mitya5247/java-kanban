@@ -15,6 +15,11 @@ public class Epic extends Task {
         subTasks.add(subTask);
     }
 
+
+    public void createSubTask(String name, String description) {
+        subTask = new SubTask(name, description);
+    }
+
     @Override
     public String toString() {
         if (!subTasks.isEmpty()) {

@@ -93,6 +93,12 @@ public class ManagerTask {
             } else {
                 System.out.println("Эпика с таким id пока не существует");
             }
+            System.out.println("Введите задачу");
+            String nameTask = scanner.next();
+            System.out.println("Введите описание задачи");
+            String taskDescription = scanner.next();
+            subTask = new SubTask(nameTask, taskDescription);
+            epicMap.get(id).subTasks.add(subTask);
         }
     }
 

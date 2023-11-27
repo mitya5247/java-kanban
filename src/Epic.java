@@ -12,7 +12,7 @@ public class Epic extends Task {
 
     public Epic(String name, String description) {
         super(name, description);
-        subTasks.add(subTask);
+     //   subTasks.add(subTask);
     }
 
 
@@ -22,7 +22,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        if (!subTasks.isEmpty()) {
+        if (!(subTasks.isEmpty())) {
             return "Epic{" +
                     "id='" + id + '\'' +
                     "name='" + name + '\'' +

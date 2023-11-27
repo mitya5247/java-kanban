@@ -8,8 +8,8 @@ public class ManagerTask {
     Epic epic;
     Scanner scanner = new Scanner(System.in);
 
-    HashMap<Integer, String> taskMap = new HashMap<>();
-    HashMap<Integer, HashMap> epicMap = new HashMap<>();
+    HashMap<Integer, Task> taskMap = new HashMap<>();
+    HashMap<Integer, Epic> epicMap = new HashMap<>();
 
     ArrayList<HashMap> taskArrayAll = new ArrayList<>();
 
@@ -53,7 +53,7 @@ public class ManagerTask {
     }
 
     void createTask() {
-        System.out.println("Выберите тип задачи: 1 - простая задача, 2 - эпик");
+        System.out.println("Выберите тип задачи: 1 - простая задача, 2 - эпик, 3 - подзадачу в эпике");
         int command = scanner.nextInt();
         if (command == 1) {
             System.out.println("Введите задачу");
@@ -62,7 +62,7 @@ public class ManagerTask {
             String taskDescription = scanner.next();
             task = new Task(nameTask, taskDescription);
             task.id = taskMap.size() + epicMap.size() + 1;
-            taskMap.put(task.id, nameTask);
+            taskMap.put(task.id, task);
             System.out.println("Задача создана!");
             System.out.println(task);
             }
@@ -75,9 +75,20 @@ public class ManagerTask {
             epic = new Epic(name, description);
             epic.id = taskMap.size() + epicMap.size() + 1;
             epic.epicSubTaskMap.put(epic.name, epic.subTasks);
-            epicMap.put(epic.id, epic.epicSubTaskMap);
+            epicMap.put(epic.id, epic);
             System.out.println("Эпик создан!");
             System.out.println(epic);
+        }
+
+        if (command == 3) {
+            System.out.println("Введите id эпика, в который хотите добавить подзадачу");
+            int id = scanner.nextInt();
+            System.out.println("Введите задачу");
+            String nameTask = scanner.next();
+            System.out.println("Введите описание задачи");
+            String taskDescription = scanner.next();
+            subTask = new SubTask(nameTask, taskDescription);
+            epicMap.get(id).subTasks.add(subTask);
         }
     }
 

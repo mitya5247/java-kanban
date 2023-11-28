@@ -3,18 +3,26 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class ManagerTask {
-    Task task;
-    SubTask subTask;
-    Epic epic;
-    Scanner scanner = new Scanner(System.in);
+  //  Task task;
+  //  SubTask subTask;
+//    Epic epic;
+   // Scanner scanner = new Scanner(System.in);
 
     HashMap<Integer, Task> taskMap = new HashMap<>();
+    HashMap<Integer, SubTask> subTaskMap = new HashMap<>();
+
     HashMap<Integer, Epic> epicMap = new HashMap<>();
+
+    HashMap<String, ArrayList> epicMapWithArray = new HashMap<>();
+    HashMap<Integer, HashMap> epicMapWithID = new HashMap<>();
+
+
 
     ArrayList<HashMap> taskArrayAll = new ArrayList<>();
 
     public ManagerTask() {
         taskArrayAll.add(taskMap);
+        taskArrayAll.add(subTaskMap);
         taskArrayAll.add(epicMap);
     }
 
@@ -26,8 +34,6 @@ public class ManagerTask {
         for (HashMap hashMap : taskArrayAll) {
             System.out.println(hashMap);
         }
-
-
     }
 
     void removeAllTasks() {
@@ -52,68 +58,93 @@ public class ManagerTask {
         return myHashMap;
     }
 
-    void createTask() {
-        System.out.println("Выберите тип задачи: 1 - простая задача, 2 - эпик, 3 - подзадачу в эпике");
-        int command = scanner.nextInt();
-        if (command == 1) {
-            System.out.println("Введите задачу");
-            String nameTask = scanner.next();
-            System.out.println("Введите описание задачи");
-            String taskDescription = scanner.next();
-            task = new Task(nameTask, taskDescription);
-            task.id = taskMap.size() + epicMap.size() + 1;
-            taskMap.put(task.id, task);
-            System.out.println("Задача создана!");
-            System.out.println(task);
-            }
+  //  void createTask() {
+    //    System.out.println("Выберите тип задачи: 1 - простая задача, 2 - эпик, 3 - подзадачу в эпике");
+   //     int command = scanner.nextInt();
+    //    if (command == 1) {
+    //        System.out.println("Введите задачу");
+    //        String nameTask = scanner.next();
+    //        System.out.println("Введите описание задачи");
+    //        String taskDescription = scanner.next();
+     //       task = new Task(nameTask, taskDescription);
+      //      task.id = taskMap.size() + epicMap.size() + 1;
+      //      taskMap.put(task.id, task);
+      //      System.out.println("Задача создана!");
+      //      System.out.println(task);
+     //       }
 
-        if (command == 2) {
-            System.out.println("Введите эпик");
-            String name = scanner.next();
-            System.out.println("Введите описание задачи");
-            String description = scanner.next();
-            epic = new Epic(name, description);
-            epic.id = taskMap.size() + epicMap.size() + 1;
-            epic.epicSubTaskMap.put(epic.name, epic.subTasks);
-            epicMap.put(epic.id, epic);
-            System.out.println("Эпик создан!");
-            System.out.println(epic);
-        }
+    //    if (command == 2) {
+    //        System.out.println("Введите эпик");
+     //       String name = scanner.next();
+    //        System.out.println("Введите описание задачи");
+      //      String description = scanner.next();
+        //    epic = new Epic(name, description);
+          //  epic.id = taskMap.size() + epicMap.size() + 1;
+    //        epic.epicSubTaskMap.put(epic.name, epic.subTasks);
+    //        epicMap.put(epic.id, epic);
+    //        System.out.println("Эпик создан!");
+    //        System.out.println(epic);
+    //    }
 
-        if (command == 3) {
-            System.out.println("Введите id эпика, в который хотите добавить подзадачу");
-            int id = scanner.nextInt();
-            if (epicMap.containsKey(id)) {
-                System.out.println("Введите задачу");
-                String nameTask = scanner.next();
-                System.out.println("Введите описание задачи");
-                String taskDescription = scanner.next();
-                subTask = new SubTask(nameTask, taskDescription);
-                epicMap.get(id).subTasks.add(subTask);
-            } else {
-                System.out.println("Эпика с таким id пока не существует");
-            }
+       // if (command == 3) {
+      //      System.out.println("Введите id эпика, в который хотите добавить подзадачу");
+     //       int id = scanner.nextInt();
+    //        if (epicMap.containsKey(id)) {
+   //             System.out.println("Введите задачу");
+  //              String nameTask = scanner.next();
+ //               System.out.println("Введите описание задачи");
+  //              String taskDescription = scanner.next();
+    //            subTask = new SubTask(nameTask, taskDescription);
+        //        epicMap.get(id).subTasks.add(subTask);
+      //      } else {
+    //            System.out.println("Эпика с таким id пока не существует");
+  //          }
+//
+     //   }
+   // }
 
-        }
+    int createTask(Task task) {
+        task.id = subTaskMap.size() + epicMap.size() + taskMap.size() + 1;
+        taskMap.put(task.id, task);
+        return task.id;
+    }
+    int createSubTask(SubTask subTask) {
+        subTask.id = subTaskMap.size() + epicMap.size() + taskMap.size() + 1;
+        subTaskMap.put(subTask.id, subTask);
+        return subTask.id;
     }
 
 
-
-
-    void updateTask(int id, Task task) {
-        for (HashMap hashMap : taskArrayAll) {
-            if (hashMap.containsKey(id)) {
-                hashMap.get(id);
-                System.out.println("Введите что хотите обновить");
-                String newName = scanner.next();
-                hashMap.put(id, task.name);
-            } else {
-                System.out.println("Задачей с таким id не найдено");
-            }
-        }
-        System.out.println("После изменения нужного id");
-        this.getListTasks();
+    int createEpic(Epic epic) {
+        epic.id = subTaskMap.size() + epicMap.size() + taskMap.size() + 1;
+        epicMap.put(epic.id, epic);
+        epicMapWithArray.put(epic.name, epic.subTasks);
+        epicMapWithID.put(epic.id, epicMapWithArray);
+        return epic.id;
     }
+
+    void putSubTaskToEpic(Epic epic, SubTask subTask) {}
+
+
+
+
+
+
+
+//    void updateTask(int id, Task task) {
+  //      for (HashMap hashMap : taskArrayAll) {
+    //        if (hashMap.containsKey(id)) {
+      //          hashMap.get(id);
+        //        System.out.println("Введите что хотите обновить");
+          //      String newName = scanner.next();
+    //            hashMap.put(id, task.name);
+    //        } else {
+     //           System.out.println("Задачей с таким id не найдено");
+ //           }
+ //       }
+ //       System.out.println("После изменения нужного id");
+ //       this.getListTasks();
+ //   }
 
 
     void removeTask(int id) {

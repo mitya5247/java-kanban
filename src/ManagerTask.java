@@ -1,7 +1,5 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.Scanner;
+
 
 public class ManagerTask {
 
@@ -30,22 +28,26 @@ public class ManagerTask {
         }
     }
 
-    void removeTasks() {
+    void removeTasksAll() {
         taskMap.clear();
     }
-    void removeSubTasks() {
+
+    void removeSubTasksAll() {
         subTaskMap.clear();
     }
-    void removeEpics() {
+
+    void removeEpicsAll() {
         epicMap.clear();
     }
 
     Task getTask(int id) {
         return taskMap.get(id);
     }
+
     SubTask getSubTask(int id) {
         return subTaskMap.get(id);
     }
+
     Epic getEpic(int id) {
         return epicMap.get(id);
     }
@@ -57,6 +59,7 @@ public class ManagerTask {
     void removeSubTask(int id) {
         subTaskMap.remove(id);
     }
+
     void removeEpic(int id) {
         epicMap.remove(id);
     }
@@ -67,6 +70,7 @@ public class ManagerTask {
         taskMap.put(task.id, task);
         return task.id;
     }
+
     int createSubTask(SubTask subTask) {
         subTask.id = nextID;
         nextID++;
@@ -114,8 +118,8 @@ public class ManagerTask {
                 }
             }
         } else {
-                isNew = true;
-            }
+            isNew = true;
+        }
 
         if (isDone && !isNew && !isInProgress) {
             epic.setStatus("DONE");
@@ -132,9 +136,6 @@ public class ManagerTask {
             System.out.println(subTaskMap.get(idItem));
         }
     }
-
-
-
 
 
 }

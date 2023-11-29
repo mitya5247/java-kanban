@@ -1,6 +1,3 @@
-import com.sun.jdi.IntegerType;
-
-import java.util.HashMap;
 
 public class Task {
     protected int id;

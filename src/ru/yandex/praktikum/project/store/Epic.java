@@ -1,12 +1,14 @@
+package ru.yandex.praktikum.project.store;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Epic extends Task {
 
 
-    //  SubTask subTask;
-    private String status = "NEW";
-    ArrayList<Integer> subTasksID = new ArrayList<>();
+    protected String status = "NEW";
+
+
+    protected ArrayList<Integer> subTasksID = new ArrayList<>();
 
 
     public Epic(String name, String description) {
@@ -14,8 +16,8 @@ public class Epic extends Task {
         this.description = description;
     }
 
-    protected void setStatus(String status) {
-        this.status = status;
+    public ArrayList<Integer> getSubTasksID() {
+        return subTasksID;
     }
 
 

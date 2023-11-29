@@ -7,11 +7,14 @@ public class Task {
     protected String status = "NEW";
     protected String name;
     protected String description = null;
-//    HashMap<Integer, String> taskMap = new HashMap<>();
 
-    public Task(String name, String description) {
+    protected Task(String name, String description, String status) {
         this.name = name;
         this.description = description;
+        this.status = status;
+    }
+
+    protected Task() {
     }
 
     @Override
@@ -20,7 +23,6 @@ public class Task {
                 "status='" + status + '\'' +
                 "name='" + name + '\'' +
                 "description='" + description + '\'' + '}';
-//                "taskMap='" + taskMap + '\'' + '}';
 
     }
 }

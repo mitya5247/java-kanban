@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ManagerTask {
@@ -9,17 +10,6 @@ public class ManagerTask {
     HashMap<Integer, SubTask> subTaskMap = new HashMap<>();
 
     HashMap<Integer, Epic> epicMap = new HashMap<>(); // хранение эпиков как объектов по id после создания
-
-
-    ArrayList<HashMap> taskArrayAll = new ArrayList<>();
-
-    public ManagerTask() {
-      //  taskArrayAll.add(taskMap);
-       // taskArrayAll.add(subTaskMap);
-      //  taskArrayAll.add(epicMap);
-    }
-
-
 
 
     void getListTasks() {
@@ -50,19 +40,26 @@ public class ManagerTask {
         epicMap.clear();
     }
 
+    Task getTask(int id) {
+        return taskMap.get(id);
+    }
+    SubTask getSubTask(int id) {
+        return subTaskMap.get(id);
+    }
+    Epic getEpic(int id) {
+        return epicMap.get(id);
+    }
 
-  //  Object getTask(int id) {
-    //    Object myHashMap = null;
-       // for (HashMap hashMap : taskArrayAll) {
-       //     hashMap.get(id);
-      ///      myHashMap = hashMap.get(id);
-      //      System.out.println("Мапа, которую вернули");
-    //        System.out.println(myHashMap);
+    void removeTask(int id) {
+        taskMap.remove(id);
+    }
 
- //           }
-     //   return myHashMap;
-  //  }
-
+    void removeSubTask(int id) {
+        subTaskMap.remove(id);
+    }
+    void removeEpic(int id) {
+        epicMap.remove(id);
+    }
 
     int createTask(Task task) {
         task.id = nextID;
@@ -81,7 +78,7 @@ public class ManagerTask {
     int createEpic(Epic epic) {
         epic.id = nextID;
         nextID++;
-        epicMap.put(epic.id, epic); // скорее всего поменяем
+        epicMap.put(epic.id, epic);
         return epic.id;
     }
 
@@ -90,39 +87,54 @@ public class ManagerTask {
         subTask.idEpic = epic.id;
     }
 
-
-
-
-
-
-
-//    void updateTask(int id, Task task) {
-  //      for (HashMap hashMap : taskArrayAll) {
-    //        if (hashMap.containsKey(id)) {
-      //          hashMap.get(id);
-        //        System.out.println("Введите что хотите обновить");
-          //      String newName = scanner.next();
-    //            hashMap.put(id, task.name);
-    //        } else {
-     //           System.out.println("Задачей с таким id не найдено");
- //           }
- //       }
- //       System.out.println("После изменения нужного id");
- //       this.getListTasks();
- //   }
-
-
-    void removeTask(int id) {
-        for (HashMap hashMap : taskArrayAll) {
-            if (hashMap.containsKey(id)) {
-                hashMap.remove(id);
-            } else {
-                System.out.println("Задачей с таким id не найдено");
-            }
-        }
-        System.out.println("После удаления нужного id");
-        this.getListTasks();
+    void updateTask(Task task) {
+        taskMap.put(task.id, task);
     }
+
+    void updateSubTask(SubTask subTask) {
+        subTaskMap.put(subTask.id, subTask);
+    }
+
+    void updateEpic(Epic epic) {
+        epicMap.put(epic.id, epic);
+        boolean isDone = false;
+        boolean isInProgress = false;
+        boolean isNew = false;
+
+
+        if (!epic.subTasksID.isEmpty()) {
+            for (int id : epic.subTasksID) {
+                if (subTaskMap.get(id).status.equals("DONE")) {
+                    isDone = true;
+                } else if (subTaskMap.get(id).status.equals("NEW")) {
+                    isNew = true;
+                } else {
+                    isInProgress = true;
+                    break;
+                }
+            }
+        } else {
+                isNew = true;
+            }
+
+        if (isDone && !isNew && !isInProgress) {
+            epic.setStatus("DONE");
+        } else if (isNew && !isInProgress && !isDone) {
+            epic.setStatus("NEW");
+        } else {
+            epic.setStatus("IN_PROGRESS");
+        }
+
+    }
+
+    void getListSubtasksOfEpic(Epic epic) {
+        for (int idItem : epic.subTasksID) {
+            System.out.println(subTaskMap.get(idItem));
+        }
+    }
+
+
+
 
 
 }

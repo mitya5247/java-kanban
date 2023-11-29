@@ -2,22 +2,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Epic extends Task {
-  //  SubTask subTask;
+
+
+    //  SubTask subTask;
+    private String status = "NEW";
     ArrayList<Integer> subTasksID = new ArrayList<>();
-  //     HashMap<String, ArrayList> epicSubTaskMap= new HashMap<>();
-//    HashMap<Integer, HashMap> epicMap = new HashMap<>();
+
+
 
 
 
     public Epic(String name, String description) {
-        super(name, description);
-     //   subTasks.add(subTask);
+        this.name = name;
+        this.description = description;
     }
 
+    protected void setStatus(String status) {
+        this.status = status;
+    }
 
-  //  public void createSubTask(String name, String description) {
-   //     subTask = new SubTask(name, description);
- //   }
 
     @Override
     public String toString() {
@@ -26,11 +29,13 @@ public class Epic extends Task {
                     "id='" + id + '\'' +
                     "name='" + name + '\'' +
                     "subTasksID=" + subTasksID + '\'' +
+                    "status='" + status + '\'' +
                     '}';
         } else {
             return "Epic{" +
                     "id='" + id + '\'' +
                     "name='" + name + '\'' +
+                    "status='" + status + '\'' +
                     '}';
         }
     }

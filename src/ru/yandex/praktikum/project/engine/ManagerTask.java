@@ -70,23 +70,23 @@ public class ManagerTask {
         epicMap.remove(id);
     }
 
-    int createTask(Task task) {
-        task.id = nextID;
+    public int createTask(Task task) {
+        task.setId(nextID);
         nextID++;
-        taskMap.put(task.id, task);
-        return task.id;
+        taskMap.put(task.getId(), task);
+        return task.getId();
     }
 
     public int createSubTask(SubTask subTask) {
-        subTask.id = nextID;
+        subTask.setId(nextID);
         nextID++;
-        subTaskMap.put(subTask.id, subTask);
-        return subTask.id;
+        subTaskMap.put(subTask.getId(), subTask);
+        return subTask.getId();
     }
 
 
     public int createEpic(Epic epic) {
-        epic.id = nextID;
+        epic.setId(nextID);
         nextID++;
         epicMap.put(epic.getId(), epic);
         return epic.getId();
@@ -95,6 +95,7 @@ public class ManagerTask {
     public void putSubTaskToEpic(Epic epic, SubTask subTask) {
         epic.getSubTasksID().add(subTask.getId());
         subTask.setIdEpic(epic.getId());
+        this.updateEpic(epic);
     }
 
     public void updateTask(Task task) {
@@ -138,7 +139,7 @@ public class ManagerTask {
 
     }
 
-    void getListSubtasksOfEpic(Epic epic) {
+    public void getListSubtasksOfEpic(Epic epic) {
         for (int idItem : epic.getSubTasksID()) {
             System.out.println(subTaskMap.get(idItem));
         }

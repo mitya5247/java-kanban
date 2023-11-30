@@ -2,7 +2,8 @@ package ru.yandex.praktikum.project.store;
 
 public class Task {
 
-    public int id;
+
+    protected int id;
     protected String status = "NEW";
 
 
@@ -20,6 +21,10 @@ public class Task {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 

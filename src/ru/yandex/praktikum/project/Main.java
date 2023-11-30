@@ -31,12 +31,9 @@ public class Main {
 
 
         managerTask.putSubTaskToEpic(epic, subTask);
-       // managerTask.updateEpic(epic);
         managerTask.putSubTaskToEpic(epic, subTask1);
-    //    managerTask.updateEpic(epic);
 
         managerTask.putSubTaskToEpic(epic1, subTask2);
-      //  managerTask.updateEpic(epic1);
 
         subTask.setStatus("DONE");
         managerTask.updateSubTask(subTask);
@@ -52,6 +49,7 @@ public class Main {
         System.out.println("HashMap subTaskMap до удаления " + managerTask.subTaskMap);
         managerTask.removeSubTask(2);
         System.out.println("HashMap subTaskMap после удаления " + managerTask.subTaskMap);
+
 
     }
 }

@@ -3,7 +3,7 @@ package ru.yandex.praktikum.project.store;
 public class SubTask extends Task {
 
 
-    int idEpic;
+    protected int idEpic;
 
     public int getIdEpic() {
         return idEpic;

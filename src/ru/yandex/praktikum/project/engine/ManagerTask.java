@@ -97,12 +97,13 @@ public class ManagerTask {
         subTask.setIdEpic(epic.getId());
     }
 
-    void updateTask(Task task) {
+    public void updateTask(Task task) {
         taskMap.put(task.getId(), task);
     }
 
-    void updateSubTask(SubTask subTask) {
+    public void updateSubTask(SubTask subTask) {
         subTaskMap.put(subTask.getId(), subTask);
+        this.updateEpic(epicMap.get(subTask.getIdEpic()));
     }
 
     public void updateEpic(Epic epic) {

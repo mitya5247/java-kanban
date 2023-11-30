@@ -10,13 +10,13 @@ public class Main {
         ManagerTask managerTask = new ManagerTask();
         Epic epic = new Epic("Сделать ремонт в кваритире", "Проведение ремонта в квартире");
 
-        SubTask subTask = new SubTask("Переклеить обои", "Выбрать цвет для обоев в комнате", "DONE");
-        SubTask subTask1 = new SubTask("Повесить светильник", "Светильник над кроватью", "NEW");
+        SubTask subTask = new SubTask("Переклеить обои", "Выбрать цвет для обоев в комнате", "NEW");
+        SubTask subTask1 = new SubTask("Повесить светильник", "Светильник над кроватью", "DONE");
 
 
         Epic epic1 = new Epic("Купить квартиру", "Квартира, чтобы сдавать");
 
-        SubTask subTask2 = new SubTask("Начать копить денежку", "Чтобы взять ипотеку", "IN_PROGRESS");
+        SubTask subTask2 = new SubTask("Начать копить денежку", "Чтобы взять ипотеку", "DONE");
 
         System.out.println("Эпик1 id " + managerTask.createEpic(epic));
         System.out.println("Подзадача 1, Эпик 1, id" + managerTask.createSubTask(subTask));
@@ -31,13 +31,15 @@ public class Main {
 
 
         managerTask.putSubTaskToEpic(epic, subTask);
-        managerTask.updateEpic(epic);
+       // managerTask.updateEpic(epic);
         managerTask.putSubTaskToEpic(epic, subTask1);
-        managerTask.updateEpic(epic);
+    //    managerTask.updateEpic(epic);
 
         managerTask.putSubTaskToEpic(epic1, subTask2);
-        managerTask.updateEpic(epic1);
+      //  managerTask.updateEpic(epic1);
 
+        subTask.setStatus("DONE");
+        managerTask.updateSubTask(subTask);
 
         System.out.println("Эпик 1 - статус после update - " + epic);
         System.out.println("Эпик 2 - статус после update  - " + epic1);
@@ -50,7 +52,6 @@ public class Main {
         System.out.println("HashMap subTaskMap до удаления " + managerTask.subTaskMap);
         managerTask.removeSubTask(2);
         System.out.println("HashMap subTaskMap после удаления " + managerTask.subTaskMap);
-
 
     }
 }

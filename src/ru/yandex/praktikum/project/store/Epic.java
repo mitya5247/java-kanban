@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Epic extends Task {
 
 
+
     protected String status = "NEW";
 
 
@@ -19,6 +20,12 @@ public class Epic extends Task {
     public ArrayList<Integer> getSubTasksID() {
         return subTasksID;
     }
+
+    @Override
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 
 
     @Override

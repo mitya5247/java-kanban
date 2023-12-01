@@ -10,13 +10,13 @@ public class Task {
     protected String name;
     protected String description;
 
-    protected Task(String name, String description, String status) {
+    public Task(String name, String description, String status) {
         this.name = name;
         this.description = description;
         this.status = status;
     }
 
-    protected Task() {
+    public Task() {
     }
 
     public int getId() {
@@ -56,9 +56,10 @@ public class Task {
     @Override
     public String toString() {
         return "Task='{" +
-                "status='" + status + '\'' +
-                "name='" + name + '\'' +
-                "description='" + description + '\'' + '}';
+                "ID='" + id + '\'' +
+                ", status='" + status + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' + '}';
 
     }
 }

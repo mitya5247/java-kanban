@@ -4,7 +4,9 @@ import ru.yandex.praktikum.project.store.Epic;
 import ru.yandex.praktikum.project.store.SubTask;
 import ru.yandex.praktikum.project.store.Task;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class ManagerTask {
@@ -16,57 +18,86 @@ public class ManagerTask {
     public HashMap<Integer, Epic> epicMap = new HashMap<>(); // хранение эпиков как объектов по id после создания
 
 
-    void getListTasks() {
+    public List getListTasks() {
+        ArrayList<Task> tasks = new ArrayList<>();
         for (Task task : taskMap.values()) {
-            System.out.println(task);
+            tasks.add(task);
         }
+        return tasks;
     }
 
-    void getListSubTasks() {
+    public List getListSubTasks() {
+        ArrayList<SubTask> subTasks = new ArrayList<>();
         for (SubTask subTask : subTaskMap.values()) {
-            System.out.println(subTask);
+            subTasks.add(subTask);
         }
+        return subTasks;
     }
 
-    void getListEpics() {
+    public List getListEpics() {
+        ArrayList<Epic> epics = new ArrayList<>();
         for (Epic epic : epicMap.values()) {
-            System.out.println(epic);
+            epics.add(epic);
         }
+        return epics;
     }
 
-    void removeTasksAll() {
+    public List getListSubtasksOfEpic(Epic epic) {
+        ArrayList<SubTask> subTasks = new ArrayList<>();
+        for (int idItem : epic.getSubTasksID()) {
+            subTasks.add(subTaskMap.get(idItem));
+        }
+        return subTasks;
+    }
+
+    public void removeTasksAll() {
         taskMap.clear();
     }
 
-    void removeSubTasksAll() {
+    public void removeSubTasksAll() {
         subTaskMap.clear();
     }
 
-    void removeEpicsAll() {
+    public void removeEpicsAll() {
         epicMap.clear();
+        this.removeSubTasksAll();
     }
 
-    Task getTask(int id) {
+    public Task getTask(int id) {
         return taskMap.get(id);
     }
 
-    SubTask getSubTask(int id) {
+    public SubTask getSubTask(int id) {
         return subTaskMap.get(id);
     }
 
-    Epic getEpic(int id) {
+    public Epic getEpic(int id) {
         return epicMap.get(id);
     }
 
-    void removeTask(int id) {
+    public void removeTask(int id) {
         taskMap.remove(id);
     }
 
     public void removeSubTask(int id) {
+        int index = 0;
+        for (int i = 0; i < epicMap.get(subTaskMap.get(id).getIdEpic()).getSubTasksID().size(); i++) { // удаляем id SubTask из списка id внутри эпика
+            if (epicMap.get(subTaskMap.get(id).getIdEpic()).getSubTasksID().get(i) == id) {
+                index = i;
+                epicMap.get(subTaskMap.get(id).getIdEpic()).getSubTasksID().remove(index);
+                break;
+            }
+        }
+        this.updateEpic(epicMap.get(subTaskMap.get(id).getIdEpic())); // обновляем нужный эпик
         subTaskMap.remove(id);
+
+
     }
 
     public void removeEpic(int id) {
+        for (int subTaskID : epicMap.get(id).getSubTasksID()) {
+            subTaskMap.remove(subTaskID);
+        }
         epicMap.remove(id);
     }
 
@@ -109,6 +140,11 @@ public class ManagerTask {
 
     public void updateEpic(Epic epic) {
         epicMap.put(epic.getId(), epic);
+        this.updateStatusEpic(epic);
+
+    }
+
+    public void updateStatusEpic(Epic epic) {
         boolean isDone = false;
         boolean isInProgress = false;
         boolean isNew = false;
@@ -137,12 +173,6 @@ public class ManagerTask {
             epic.setStatus("IN_PROGRESS");
         }
 
-    }
-
-    public void getListSubtasksOfEpic(Epic epic) {
-        for (int idItem : epic.getSubTasksID()) {
-            System.out.println(subTaskMap.get(idItem));
-        }
     }
 
 

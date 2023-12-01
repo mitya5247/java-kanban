@@ -31,15 +31,15 @@ public class Epic extends Task {
         if (!(subTasksID.isEmpty())) {
             return "Epic{" +
                     "id='" + id + '\'' +
-                    "name='" + name + '\'' +
-                    "subTasksID=" + subTasksID + '\'' +
-                    "status='" + status + '\'' +
+                    ", name='" + name + '\'' +
+                    ", subTasksID=" + subTasksID + '\'' +
+                    ", status='" + status + '\'' +
                     '}';
         } else {
             return "Epic{" +
                     "id='" + id + '\'' +
-                    "name='" + name + '\'' +
-                    "status='" + status + '\'' +
+                    ", name='" + name + '\'' +
+                    ", status='" + status + '\'' +
                     '}';
         }
     }

@@ -8,48 +8,54 @@ public class Main {
 
     public static void main(String[] args) {
         ManagerTask managerTask = new ManagerTask();
-        Epic epic = new Epic("Сделать ремонт в кваритире", "Проведение ремонта в квартире");
 
-        SubTask subTask = new SubTask("Переклеить обои", "Выбрать цвет для обоев в комнате", "NEW");
-        SubTask subTask1 = new SubTask("Повесить светильник", "Светильник над кроватью", "DONE");
+        SubTask subTask = new SubTask("1", "1", "DONE");
+        SubTask subTask1 = new SubTask("2", "2", "NEW");
+        SubTask subTask2 = new SubTask("3", "3", "DONE");
 
+        Epic epic = new Epic("Купить компьютер", "Компьютер");
 
-        Epic epic1 = new Epic("Купить квартиру", "Квартира, чтобы сдавать");
+        managerTask.createSubTask(subTask);
+        managerTask.createSubTask(subTask1);
+        managerTask.createSubTask(subTask2);
 
-        SubTask subTask2 = new SubTask("Начать копить денежку", "Чтобы взять ипотеку", "DONE");
+        managerTask.createEpic(epic);
 
-        System.out.println("Эпик1 id " + managerTask.createEpic(epic));
-        System.out.println("Подзадача 1, Эпик 1, id" + managerTask.createSubTask(subTask));
-        System.out.println("Подзадача 2, Эпик 1, id" + managerTask.createSubTask(subTask1));
-
-
-        System.out.println("Эпик2 id " + managerTask.createEpic(epic1));
-        System.out.println("Подзадача 1, Эпик 2, id" + managerTask.createSubTask(subTask2));
-
-        System.out.println("Эпик 1 - статус до update - " + epic);
-        System.out.println("Эпик 2 - статус до update  - " + epic1);
 
 
         managerTask.putSubTaskToEpic(epic, subTask);
         managerTask.putSubTaskToEpic(epic, subTask1);
+        managerTask.putSubTaskToEpic(epic, subTask2);
 
-        managerTask.putSubTaskToEpic(epic1, subTask2);
-
-        subTask.setStatus("DONE");
-        managerTask.updateSubTask(subTask);
-
-        System.out.println("Эпик 1 - статус после update - " + epic);
-        System.out.println("Эпик 2 - статус после update  - " + epic1);
+        System.out.println(epic);
 
 
-        System.out.println("HashMap epicMap до удаления " + managerTask.epicMap);
-        managerTask.removeEpic(1);
-        System.out.println("HashMap epicMap после удаления " + managerTask.epicMap);
+        subTask1.setStatus("DONE");
+        managerTask.updateSubTask(subTask1);
 
-        System.out.println("HashMap subTaskMap до удаления " + managerTask.subTaskMap);
+
+        SubTask subTask3 = new SubTask("4", "4", "NEW");
+        managerTask.createSubTask(subTask3);
+
+
+        managerTask.putSubTaskToEpic(epic, subTask3);
+
+
+        System.out.println(epic); // статус IN_PROGRESS
+
+/*        managerTask.removeSubTask(5);
+        managerTask.removeSubTask(1);
         managerTask.removeSubTask(2);
-        System.out.println("HashMap subTaskMap после удаления " + managerTask.subTaskMap);
+        managerTask.removeSubTask(3);*/
+
+        System.out.println("Лист "  + managerTask.getListSubtasksOfEpic(epic));
 
 
+
+        System.out.println("После удаления subTask" + epic); // статус IN_PROGRESS
+
+
+
+        System.out.println(managerTask.subTaskMap);
     }
 }

@@ -55,6 +55,10 @@ public class ManagerTask {
     }
 
     public void removeSubTasksAll() {
+        for (Epic epic : epicMap.values()) {
+            epic.getSubTasksID().clear();
+            this.updateEpic(epic);
+        }
         subTaskMap.clear();
     }
 
@@ -81,14 +85,16 @@ public class ManagerTask {
 
     public void removeSubTask(int id) {
         int index = 0;
-        for (int i = 0; i < epicMap.get(subTaskMap.get(id).getIdEpic()).getSubTasksID().size(); i++) { // удаляем id SubTask из списка id внутри эпика
-            if (epicMap.get(subTaskMap.get(id).getIdEpic()).getSubTasksID().get(i) == id) {
-                index = i;
-                epicMap.get(subTaskMap.get(id).getIdEpic()).getSubTasksID().remove(index);
-                break;
+        if (subTaskMap.get(id).getIdEpic() != 0) { // если subTask принадлежит какому-либо эпику
+            for (int i = 0; i < epicMap.get(subTaskMap.get(id).getIdEpic()).getSubTasksID().size(); i++) { // удаляем id SubTask из списка id внутри эпика
+                if (epicMap.get(subTaskMap.get(id).getIdEpic()).getSubTasksID().get(i) == id) {
+                    index = i;
+                    epicMap.get(subTaskMap.get(id).getIdEpic()).getSubTasksID().remove(index);
+                    break;
+                }
             }
+            this.updateEpic(epicMap.get(subTaskMap.get(id).getIdEpic())); // обновляем нужный эпик
         }
-        this.updateEpic(epicMap.get(subTaskMap.get(id).getIdEpic())); // обновляем нужный эпик
         subTaskMap.remove(id);
 
 

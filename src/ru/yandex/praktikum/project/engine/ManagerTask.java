@@ -12,7 +12,7 @@ import java.util.List;
 public class ManagerTask {
 
     int nextID = 1;
-    HashMap<Integer, Task> taskMap = new HashMap<>();
+    public HashMap<Integer, Task> taskMap = new HashMap<>();
     public HashMap<Integer, SubTask> subTaskMap = new HashMap<>();
 
     public HashMap<Integer, Epic> epicMap = new HashMap<>(); // хранение эпиков как объектов по id после создания
@@ -141,7 +141,9 @@ public class ManagerTask {
 
     public void updateSubTask(SubTask subTask) {
         subTaskMap.put(subTask.getId(), subTask);
-        this.updateEpic(epicMap.get(subTask.getIdEpic()));
+        if (subTaskMap.get(subTask.getId()).getIdEpic() != 0) {
+            this.updateEpic(epicMap.get(subTask.getIdEpic()));
+        }
     }
 
     public void updateEpic(Epic epic) {

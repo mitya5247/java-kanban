@@ -7,7 +7,7 @@ import ru.yandex.praktikum.project.store.*;
 public class Main {
 
     public static void main(String[] args) {
-        ManagerTask managerTask = new ManagerTask();
+        InMemoryTaskManager managerTask = new InMemoryTaskManager();
 
         SubTask subTask = new SubTask("1", "1", "DONE");
         SubTask subTask1 = new SubTask("2", "2", "NEW");
@@ -29,24 +29,11 @@ public class Main {
         managerTask.putSubTaskToEpic(epic, subTask1);
         managerTask.putSubTaskToEpic(epic1, subTask2);
 
+        managerTask.getSubTask(2);
+        managerTask.getSubTask(3);
+        managerTask.getEpic(4);
 
-        System.out.println(managerTask.getListSubtasksOfEpic(epic));
-        System.out.println(managerTask.getListSubtasksOfEpic(epic1));
-
-        System.out.println("До обновления " + managerTask.getListEpics());
-
-        subTask1.setStatus("DONE"); // меняем статусы
-        subTask2.setStatus("NEW");
-        managerTask.updateSubTask(subTask1);
-        managerTask.updateSubTask(subTask2);
-        System.out.println("После обновления " + managerTask.getListEpics());
-
-        managerTask.removeSubTask(subTask1.getId()); // удаляем подзадачу
-        managerTask.removeEpic(epic1.getId()); // и эпик
-
-
-        System.out.println(managerTask.getListSubTasks());
-        System.out.println(managerTask.getListEpics());
+        managerTask.getHistory();
 
     }
 }

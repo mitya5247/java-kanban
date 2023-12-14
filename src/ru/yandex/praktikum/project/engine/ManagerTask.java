@@ -51,7 +51,7 @@ public interface ManagerTask {
 
     public void updateStatusEpic(Epic epic);
 
-    public void getHistory();
+    public List getHistory();
 
 
 }

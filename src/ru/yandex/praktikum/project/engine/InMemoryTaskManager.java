@@ -5,10 +5,7 @@ import ru.yandex.praktikum.project.store.Status;
 import ru.yandex.praktikum.project.store.SubTask;
 import ru.yandex.praktikum.project.store.Task;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 public class InMemoryTaskManager implements ManagerTask {
@@ -220,16 +217,36 @@ public class InMemoryTaskManager implements ManagerTask {
     }
 
     @Override
-    public void getHistory() {
-        System.out.println("Task: (" + taskCounter + ")" );
-        System.out.println("SubTask: (" + subTaskCounter + ")" );
-        System.out.println("Epic: (" + epicCounter + ")" );
+    public List<Task> getHistory() {
 
-        if (tasksListHistory.size() > 10) {
-            tasksListHistory.remove(0);
+        if (!tasksListHistory.isEmpty()) {
+            System.out.println(tasksListHistory.size());
+            if (tasksListHistory.size() > 10) {
+                ArrayList<Integer> idArray = new ArrayList<>();
+                for (int i = 0; i < tasksListHistory.size() - 10; i++) {
+                    idArray.add(tasksListHistory.get(i).getId());
+                    if (tasksListHistory.size() == 10) {
+                       break;
+                    }
+                   // tasksListHistory.remove(i);
+               }
+                System.out.println(idArray);
+                for (int i = 0; i < idArray.size(); i++) {
+                    for (int j = 0; i < tasksListHistory.size(); i++) {
+                        if (tasksListHistory.get(j).getId() == idArray.get(i)) {
+                            tasksListHistory.remove(j);
+                        }
+                        break;
+                    }
+                }
+
+            }
+            System.out.println(tasksListHistory);
+            System.out.println(tasksListHistory.size());
+        } else {
+            System.out.println("История пуста");
         }
-        System.out.println(tasksListHistory);
-
+        return tasksListHistory;
     }
 
 

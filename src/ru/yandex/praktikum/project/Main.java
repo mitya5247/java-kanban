@@ -33,10 +33,6 @@ public class Main {
         Task task = new Task("17", "17", "NEW");
 
 
-
-
-
-
         Epic epic = new Epic("14", "14");
         Epic epic1 = new Epic("15", "15");
 
@@ -92,8 +88,6 @@ public class Main {
         managerTask.getTask(task.getId());
 
 
-
-        System.out.println("История последних 10 вызовов: " + Managers.getDefaultHistory());
-
+        System.out.println("История последних 10 задач: " + Managers.getDefaultHistory());
     }
 }

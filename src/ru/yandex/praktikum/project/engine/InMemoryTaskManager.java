@@ -16,12 +16,7 @@ public class InMemoryTaskManager implements ManagerTask {
 
     public HashMap<Integer, Epic> epicMap = new HashMap<>(); // хранение эпиков как объектов по id после создания
 
-    private int taskCounter = 0;
-    private int subTaskCounter = 0;
-    private int epicCounter = 0;
-
-    List<Task> tasksListHistory = new ArrayList<>();
-
+    InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
 
     @Override
@@ -82,22 +77,19 @@ public class InMemoryTaskManager implements ManagerTask {
 
     @Override
     public Task getTask(int id) {
-        taskCounter += 1;
-        tasksListHistory.add(taskMap.get(id));
+        historyManager.add(taskMap.get(id));
         return taskMap.get(id);
     }
 
     @Override
     public SubTask getSubTask(int id) {
-        subTaskCounter += 1;
-        tasksListHistory.add(subTaskMap.get(id));
+        historyManager.add(subTaskMap.get(id));
         return subTaskMap.get(id);
     }
 
     @Override
     public Epic getEpic(int id) {
-        epicCounter += 1;
-        tasksListHistory.add(epicMap.get(id));
+        historyManager.add(epicMap.get(id));
         return epicMap.get(id);
     }
 
@@ -216,38 +208,8 @@ public class InMemoryTaskManager implements ManagerTask {
 
     }
 
-    @Override
-    public List<Task> getHistory() {
-
-        if (!tasksListHistory.isEmpty()) {
-            System.out.println(tasksListHistory.size());
-            if (tasksListHistory.size() > 10) {
-                ArrayList<Integer> idArray = new ArrayList<>();
-                for (int i = 0; i < tasksListHistory.size() - 10; i++) {
-                    idArray.add(tasksListHistory.get(i).getId());
-                    if (tasksListHistory.size() == 10) {
-                       break;
-                    }
-                   // tasksListHistory.remove(i);
-               }
-                System.out.println(idArray);
-                for (int i = 0; i < idArray.size(); i++) {
-                    for (int j = 0; i < tasksListHistory.size(); i++) {
-                        if (tasksListHistory.get(j).getId() == idArray.get(i)) {
-                            tasksListHistory.remove(j);
-                        }
-                        break;
-                    }
-                }
-
-            }
-            System.out.println(tasksListHistory);
-            System.out.println(tasksListHistory.size());
-        } else {
-            System.out.println("История пуста");
-        }
-        return tasksListHistory;
-    }
-
-
 }
+
+
+
+

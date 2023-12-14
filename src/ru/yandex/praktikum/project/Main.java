@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         InMemoryTaskManager managerTask = new InMemoryTaskManager();
 
-        Managers manager = new Managers();
+        Managers manager = new Managers(managerTask);
 
         SubTask subTask = new SubTask("1", "1", "DONE");
         SubTask subTask1 = new SubTask("2", "2", "NEW");
@@ -93,8 +93,7 @@ public class Main {
 
 
 
-        System.out.println("История последних 10 вызовов: " + managerTask.getHistory());
-
+        System.out.println("История последних 10 вызовов: " + Managers.getDefaultHistory());
 
     }
 }

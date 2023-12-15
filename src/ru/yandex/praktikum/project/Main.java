@@ -87,7 +87,6 @@ public class Main {
         managerTask.getEpic(epic.getId());
         managerTask.getTask(task.getId());
 
-
         System.out.println("История последних 10 задач: " + Managers.getDefaultHistory());
     }
 }

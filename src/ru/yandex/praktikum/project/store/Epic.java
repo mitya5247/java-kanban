@@ -8,7 +8,7 @@ public class Epic extends Task {
     protected String status = "NEW";
 
 
-    protected ArrayList<Integer> subTasksID = new ArrayList<>();
+    protected ArrayList<Integer> subTasksId = new ArrayList<>();
 
 
     public Epic(String name, String description) {
@@ -16,8 +16,8 @@ public class Epic extends Task {
         this.description = description;
     }
 
-    public ArrayList<Integer> getSubTasksID() {
-        return subTasksID;
+    public ArrayList<Integer> getSubTasksId() {
+        return subTasksId;
     }
 
     @Override
@@ -28,11 +28,11 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        if (!(subTasksID.isEmpty())) {
+        if (!(subTasksId.isEmpty())) {
             return "Epic{" +
                     "id='" + id + '\'' +
                     ", name='" + name + '\'' +
-                    ", subTasksID=" + subTasksID + '\'' +
+                    ", subTasksId=" + subTasksId + '\'' +
                     ", status='" + status + '\'' +
                     '}';
         } else {

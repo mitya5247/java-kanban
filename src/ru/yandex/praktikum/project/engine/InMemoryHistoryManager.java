@@ -24,14 +24,11 @@ public class InMemoryHistoryManager implements HistoryManager {
                         break;
                     }
                 }
+                System.out.println(tasksListHistory.size());
                 for (int i = 0; i < idArray.size(); i++) {
-                    for (int j = 0; i < tasksListHistory.size(); i++) {
-                        if (tasksListHistory.get(j).getId() == idArray.get(i)) {
-                            tasksListHistory.remove(j);
-                        }
-                        break;
-                    }
+                    tasksListHistory.remove(0);
                 }
+                System.out.println(tasksListHistory.size());
 
             }
         } else {

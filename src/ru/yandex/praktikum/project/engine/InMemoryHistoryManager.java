@@ -24,12 +24,9 @@ public class InMemoryHistoryManager implements HistoryManager {
                         break;
                     }
                 }
-                System.out.println(tasksListHistory.size());
                 for (int i = 0; i < idArray.size(); i++) {
                     tasksListHistory.remove(0);
                 }
-                System.out.println(tasksListHistory.size());
-
             }
         } else {
             System.out.println("История пуста");

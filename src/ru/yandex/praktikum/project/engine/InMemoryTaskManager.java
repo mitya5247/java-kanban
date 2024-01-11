@@ -16,7 +16,7 @@ public class InMemoryTaskManager implements ManagerTask {
 
     public HashMap<Integer, Epic> epicMap = new HashMap<>(); // хранение эпиков как объектов по id после создания
 
-    InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+    public InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
 
     @Override
@@ -77,18 +77,21 @@ public class InMemoryTaskManager implements ManagerTask {
 
     @Override
     public Task getTask(int id) {
+      //  historyManager.add(taskMap.get(id));
         historyManager.add(taskMap.get(id));
         return taskMap.get(id);
     }
 
     @Override
     public SubTask getSubTask(int id) {
+      //  historyManager.add(subTaskMap.get(id));
         historyManager.add(subTaskMap.get(id));
         return subTaskMap.get(id);
     }
 
     @Override
     public Epic getEpic(int id) {
+     //   historyManager.add(epicMap.get(id));
         historyManager.add(epicMap.get(id));
         return epicMap.get(id);
     }

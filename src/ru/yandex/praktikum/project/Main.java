@@ -23,6 +23,14 @@ public class Main {
         Task task = new Task("4", "4", "NEW");
         Task task1 = new Task("5", "5", "NEW");
 
+        Task task3 = new Task("5", "5", "NEW");
+        Task task4 = new Task("5", "5", "NEW");
+        Task task5 = new Task("5", "5", "NEW");
+        Task task6 = new Task("5", "5", "NEW");
+        Task task7 = new Task("5", "5", "NEW");
+
+
+
 
 
 
@@ -36,6 +44,13 @@ public class Main {
 
         managerTask.createTask(task);
         managerTask.createTask(task1);
+        managerTask.createTask(task3);
+        managerTask.createTask(task4);
+        managerTask.createTask(task5);
+        managerTask.createTask(task6);
+        managerTask.createTask(task7);
+
+
 
 
 
@@ -52,31 +67,44 @@ public class Main {
 
         managerTask.getSubTask(subTask.getId());
         managerTask.getSubTask(subTask1.getId());
-        managerTask.getTask(task.getId());
+        managerTask.getSubTask(subTask2.getId());
+        managerTask.getTask(task.getId()); // id 4
+        managerTask.getTask(task1.getId()); // удалился, так как больше 10 список в листе
+        managerTask.getTask(task3.getId());
+        managerTask.getTask(task4.getId());
+        managerTask.getTask(task5.getId());
+        managerTask.getTask(task6.getId());
+        managerTask.getTask(task7.getId());
         managerTask.getEpic(epic.getId());
+        managerTask.getEpic(epic1.getId());
 
-        System.out.println("LL до повторения " + Managers.getDefaultHistory());
-        managerTask.getTask(task.getId());
+        System.out.println(Managers.getDefaultHistory().size);
 
-        System.out.println("LL после повторения " + Managers.getDefaultHistory());
+        System.out.println("До удаления " + Managers.getDefaultHistory().toStringNew());
 
-
-        //    managerTask.getSubTask(subTask.getId());
-
-
-
-
-
-
-
-        System.out.println(Managers.getDefaultHistory().tasksListHistory.size());
-
-        System.out.println("История последних 10 задач: " + Managers.getDefaultHistory());
-        System.out.println(Managers.getDefaultHistory().tasksListHistory.size());
-
+        Managers.getDefaultHistory().remove(1);
+        Managers.getDefaultHistory().remove(2);
+        Managers.getDefaultHistory().remove(3);
+        Managers.getDefaultHistory().remove(4);
+        Managers.getDefaultHistory().remove(5);
+        Managers.getDefaultHistory().remove(6);
+        Managers.getDefaultHistory().remove(7);
+        Managers.getDefaultHistory().remove(8);
+        Managers.getDefaultHistory().remove(9);
+        Managers.getDefaultHistory().remove(10);
+        Managers.getDefaultHistory().remove(11);
+   //     Managers.getDefaultHistory().remove(12);
 
 
+        System.out.println("После удаления " + Managers.getDefaultHistory().toStringNew());
 
+
+
+
+        System.out.println(Managers.getDefaultHistory());
+
+
+        System.out.println(Managers.getDefaultHistory().size);
 
     }
 }

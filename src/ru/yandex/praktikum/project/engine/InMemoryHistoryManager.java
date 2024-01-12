@@ -49,7 +49,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             head = node;
             head.next = null;
             head.prev = null;
-            tail = head;
+            tail = node;
         }
         size++;
     }
@@ -59,13 +59,12 @@ public class InMemoryHistoryManager implements HistoryManager {
         Node<Task> node = head;
 
         if (head == null) {
-            System.out.println("Истории нет");
+            return;
         } else {
             while (node != null) {
                 tasksListHistory.add(node.data);
                 node = node.next;
             }
-         //   tasksListHistory.add(tail.data);
         }
 
 
@@ -83,43 +82,34 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     public void removeNode(Node<Task> node) {
-        ArrayList<Task> toDelete = new ArrayList<>();
         Node<Task> firstNode = head;
-        if (firstNode == null) {
-            System.out.println("Список пуст");
-        } else if (firstNode.equals(node) && firstNode.equals(tail)) {
-
-            toDelete.add(firstNode.data);
-
-            tasksMapHistory.remove(firstNode.data.getId());
-            tasksListHistory.removeAll(toDelete);
-
-            head = null;
-            tail = null;
-
-        } else if (node.equals(tail)) {
-
-            toDelete.add(node.data);
-
-
-            tasksMapHistory.remove(firstNode.data.getId());
-            tasksListHistory.removeAll(toDelete);
-
-            tail = tail.prev;
-            tail.next = null;
-
-        } else {
-
-            while (firstNode.next != null) {
-                if (firstNode.equals(node)) {
+        while (firstNode != null) {
+            if (firstNode.equals(node)) {
+                if (firstNode == tail && firstNode == head) {
+                    tail = null;
+                    head = null;
+                    break;
+                } else if (firstNode == head) {
+                    head = firstNode.next;
+                    firstNode.next.prev = head;
+                    break;
+                } else if (firstNode == tail) {
+                    tail = firstNode.prev;
+                    tail.next = null;
+                    break;
+                } else {
                     firstNode.prev.next = firstNode.next;
-                    return;
+                    firstNode.next.prev = firstNode.prev; // она связывает ноду предыдущую с последующей, то есть ссылка на предыдущий список, без этой строки
+                    //      firstNode.next.prev ссылается также на firstNode, который пытаемся удалить!
+                    break;
                 }
-                firstNode = firstNode.next;
+
             }
+            firstNode = firstNode.next;
+
         }
 
-        size--;
+        --size;
     }
 
     @Override
@@ -131,6 +121,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             tasksMapHistory.remove(task.getId(), task);
             this.removeNode(this.getNode(task.getId()));
             this.linkLast(task);
+            tasksMapHistory.put(task.getId(), task);
         }
 
 
@@ -149,6 +140,7 @@ public class InMemoryHistoryManager implements HistoryManager {
                     }
                 }
                 for (int i = 0; i < idArray.size(); i++) {
+                    this.removeNode(this.getNode(tasksListHistory.get(0).getId()));
                     tasksListHistory.remove(0);
                 }
             }
@@ -160,22 +152,38 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        if (!tasksListHistory.isEmpty()) {
-            for (int i = 0; i < tasksListHistory.size(); i++) {
-                if (tasksListHistory.get(i).getId() == id) {
-                    tasksListHistory.remove(i);
-                }
-            }
+        //  if (!tasksListHistory.isEmpty()) {
+        //     for (int i = 0; i < tasksListHistory.size(); i++) {
+        //        if (tasksListHistory.get(i).getId() == id) {
+        //            tasksListHistory.remove(i);
+        //           break;
+        //        }
+        //   }
+        //  } else {
+        // System.out.println("История  пуста");
+        //    return ;
+        //   }
+        if (head != null) {
+            this.removeNode(this.getNode(id));
+            this.getTasks();
         } else {
             System.out.println("История пуста");
         }
     }
 
+
     @Override
     public String toString() {
         return this.getHistory().toString();
-     //   return "LinkedList{" +
-     //           "head='" + head +
-     //           "}";
+        //  return "LinkedList{" +
+        //        "head='" + head +
+        //      "}";
+    }
+
+    public String toStringNew() {
+        //  return this.getHistory().toString();
+        return "LinkedList{" +
+                "head='" + head +
+                "}";
     }
 }

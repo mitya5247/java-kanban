@@ -5,20 +5,20 @@ import ru.yandex.praktikum.project.store.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    public ArrayList<Task> tasksListHistory = new ArrayList<>();
+    private ArrayList<Task> tasksListHistory = new ArrayList<>();
 
-    public Map<Integer, Task> tasksMapHistory = new HashMap<>();
+    private Map<Integer, Task> tasksMapHistory = new HashMap<>();
 
-    public Node<Task> head;
-    public Node<Task> tail;
-    public int size = 0;
+    private Node<Task> head;
+    private Node<Task> tail;
+    private int size = 0;
 
 
     class Node<Task> {
 
-        public Node<Task> prev;
-        public Task data;
-        public Node<Task> next;
+        private Node<Task> prev;
+        private final Task data;
+        private Node<Task> next;
 
 
         public Node(Task data) {
@@ -72,17 +72,24 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     public Node<Task> getNode(int id) {
         Node<Task> currentNode = head;
-        while (currentNode.next != null) {
+        while (currentNode != null) {
             if (currentNode.data.getId() == id) {
                 return currentNode;
             }
             currentNode = currentNode.next;
+        }
+        if (currentNode == null) {
+            System.out.println("Node c id " + id + " не найден");
+            return null;
         }
         return currentNode;
     }
 
     public void removeNode(Node<Task> node) {
         Node<Task> firstNode = head;
+        if (node == null) {
+            return;
+        }
         while (firstNode != null) {
             if (firstNode.equals(node)) {
                 if (firstNode == tail && firstNode == head) {
@@ -99,8 +106,7 @@ public class InMemoryHistoryManager implements HistoryManager {
                     break;
                 } else {
                     firstNode.prev.next = firstNode.next;
-                    firstNode.next.prev = firstNode.prev; // она связывает ноду предыдущую с последующей, то есть ссылка на предыдущий список, без этой строки
-                    //      firstNode.next.prev ссылается также на firstNode, который пытаемся удалить!
+                    firstNode.next.prev = firstNode.prev;
                     break;
                 }
 
@@ -152,17 +158,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        //  if (!tasksListHistory.isEmpty()) {
-        //     for (int i = 0; i < tasksListHistory.size(); i++) {
-        //        if (tasksListHistory.get(i).getId() == id) {
-        //            tasksListHistory.remove(i);
-        //           break;
-        //        }
-        //   }
-        //  } else {
-        // System.out.println("История  пуста");
-        //    return ;
-        //   }
         if (head != null) {
             this.removeNode(this.getNode(id));
             this.getTasks();
@@ -175,15 +170,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public String toString() {
         return this.getHistory().toString();
-        //  return "LinkedList{" +
-        //        "head='" + head +
-        //      "}";
     }
 
-    public String toStringNew() {
-        //  return this.getHistory().toString();
-        return "LinkedList{" +
-                "head='" + head +
-                "}";
-    }
+
 }

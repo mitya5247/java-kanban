@@ -79,7 +79,8 @@ public class InMemoryHistoryManager implements HistoryManager {
             currentNode = currentNode.next;
         }
         if (currentNode == null) {
-            System.out.println("Node c id " + id + " не найден");
+            String text = String.format("Node c id %d не найден", id);
+            System.out.println(text);
             return null;
         }
         return currentNode;

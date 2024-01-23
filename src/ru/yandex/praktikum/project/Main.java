@@ -3,9 +3,11 @@ package ru.yandex.praktikum.project;
 import ru.yandex.praktikum.project.engine.*;
 import ru.yandex.praktikum.project.store.*;
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         InMemoryTaskManager managerTask = new InMemoryTaskManager();
 
 
@@ -49,9 +51,18 @@ public class Main {
 
 
         Managers.getDefaultHistory().remove(task0.getId());
-        Managers.getDefaultHistory().remove(epic.getId());
+      //  Managers.getDefaultHistory().remove(epic.getId());
 
         System.out.println(Managers.getDefaultHistory());
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager("/home/mitya5247/Программирование/dev/java-kanban/java-kanban", "text.csv");
+      //  System.out.println(fileBackedTasksManager.toString(task0));
+  //    fileBackedTasksManager.save(task0);
+        fileBackedTasksManager.save(task1);
+        fileBackedTasksManager.save(subTask0);
+        fileBackedTasksManager.save(subTask1);
+        fileBackedTasksManager.save(subTask2);
+
+
 
     }
 }

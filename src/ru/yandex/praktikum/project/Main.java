@@ -24,6 +24,9 @@ public class Main {
         Epic epic1 = new Epic("15", "15");
 
 
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager("/home/mitya5247/Программирование/dev/java-kanban/java-kanban", "text.csv", managerTask);
+
+
         managerTask.createSubTask(subTask0);
         managerTask.createSubTask(subTask1);
         managerTask.createSubTask(subTask2);
@@ -49,19 +52,9 @@ public class Main {
         managerTask.getSubTask(subTask0.getId());
         managerTask.getEpic(epic.getId());
 
+        System.out.println(Managers.getDefaultHistory().getHistory());
 
-        Managers.getDefaultHistory().remove(task0.getId());
-      //  Managers.getDefaultHistory().remove(epic.getId());
-
-        System.out.println(Managers.getDefaultHistory());
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager("/home/mitya5247/Программирование/dev/java-kanban/java-kanban", "text.csv");
-      //  System.out.println(fileBackedTasksManager.toString(task0));
-  //    fileBackedTasksManager.save(task0);
-        fileBackedTasksManager.save(task1);
-        fileBackedTasksManager.save(subTask0);
-        fileBackedTasksManager.save(subTask1);
-        fileBackedTasksManager.save(subTask2);
-
+        fileBackedTasksManager.save();
 
 
     }

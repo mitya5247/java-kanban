@@ -11,12 +11,26 @@ import java.util.*;
 public class InMemoryTaskManager implements ManagerTask {
 
     int nextId = 1;
+
+
     public HashMap<Integer, Task> taskMap = new HashMap<>();
     public HashMap<Integer, SubTask> subTaskMap = new HashMap<>();
 
     public HashMap<Integer, Epic> epicMap = new HashMap<>();
 
     public InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+
+    public HashMap<Integer, Task> getTaskMap() {
+        return taskMap;
+    }
+
+    public HashMap<Integer, SubTask> getSubTaskMap() {
+        return subTaskMap;
+    }
+
+    public HashMap<Integer, Epic> getEpicMap() {
+        return epicMap;
+    }
 
 
     @Override

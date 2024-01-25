@@ -1,13 +1,14 @@
 package ru.yandex.praktikum.project;
 
 import ru.yandex.praktikum.project.engine.*;
+import ru.yandex.praktikum.project.exceptions.SaveException;
 import ru.yandex.praktikum.project.store.*;
 
 import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws SaveException {
         InMemoryTaskManager managerTask = new InMemoryTaskManager();
 
 
@@ -24,7 +25,7 @@ public class Main {
         Epic epic1 = new Epic("15", "15");
 
 
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager("/home/mitya5247/Программирование/dev/java-kanban/java-kanban", "text.csv", managerTask);
+    //    FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager("text.csv");
 
 
         managerTask.createSubTask(subTask0);
@@ -52,10 +53,10 @@ public class Main {
         managerTask.getSubTask(subTask0.getId());
         managerTask.getEpic(epic.getId());
 
+        managerTask.getTask(task0.getId());
+
+
         System.out.println(Managers.getDefaultHistory().getHistory());
-
-        fileBackedTasksManager.save();
-
 
     }
 }

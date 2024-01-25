@@ -151,8 +151,6 @@ public class InMemoryHistoryManager implements HistoryManager {
                     tasksListHistory.remove(0);
                 }
             }
-        } else {
-            System.out.println("История пуста");
         }
         return tasksListHistory;
     }
@@ -163,7 +161,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             this.removeNode(this.getNode(id));
             this.getTasks();
         } else {
-            System.out.println("История пуста");
+            return;
         }
     }
 

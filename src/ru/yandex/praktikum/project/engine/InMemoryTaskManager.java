@@ -126,6 +126,7 @@ public class InMemoryTaskManager implements ManagerTask {
             this.updateEpic(epicMap.get(subTaskMap.get(id).getIdEpic())); // обновляем нужный эпик
         }
         subTaskMap.remove(id);
+        historyManager.remove(id);
 
 
     }
@@ -136,6 +137,7 @@ public class InMemoryTaskManager implements ManagerTask {
             subTaskMap.remove(subTaskID);
         }
         epicMap.remove(id);
+        historyManager.remove(id);
     }
 
     @Override

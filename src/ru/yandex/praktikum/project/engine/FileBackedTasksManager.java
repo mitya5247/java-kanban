@@ -22,10 +22,47 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         File file = new File("/home/mitya5247/Программирование/dev/java-kanban/java-kanban/text.csv");
-       // FileBackedTasksManager.loadFromFile(file);
-        System.out.println(FileBackedTasksManager.loadFromFile(file).taskMap);
-        System.out.println(FileBackedTasksManager.loadFromFile(file).subTaskMap);
-        System.out.println(FileBackedTasksManager.loadFromFile(file).epicMap);
+
+        FileBackedTasksManager oldManager = new FileBackedTasksManager(file);
+
+        Task task0 = new Task("4", "4", "NEW");
+        Task task1 = new Task("5", "5", "NEW");
+
+        SubTask subTask1 = new SubTask("2", "2", "IN_PROGRESS");
+        SubTask subTask2 = new SubTask("3", "3", "DONE");
+
+        Epic epic = new Epic("14", "14");
+        Epic epic1 = new Epic("15", "15");
+
+        oldManager.createTask(task0);
+        oldManager.createTask(task1);
+
+        oldManager.createSubTask(subTask1);
+        oldManager.createSubTask(subTask2);
+
+        oldManager.createEpic(epic);
+        oldManager.createEpic(epic1);
+
+        oldManager.getSubTask(subTask1.getId());
+        oldManager.getSubTask(subTask2.getId());
+        oldManager.getTask(task1.getId());
+        oldManager.getTask(task0.getId());
+        oldManager.getEpic(epic.getId());
+        oldManager.getEpic(epic1.getId());
+        oldManager.getSubTask(subTask1.getId());
+
+
+        oldManager.putSubTaskToEpic(epic, subTask1);
+        oldManager.putSubTaskToEpic(epic1, subTask2);
+
+        oldManager.removeEpic(epic.getId());
+
+
+        FileBackedTasksManager newManager = FileBackedTasksManager.loadFromFile(file); // создали новый менеджер из файла
+        System.out.println(newManager.taskMap);
+        System.out.println(newManager.subTaskMap);
+        System.out.println(newManager.epicMap);
+
 
     }
 
@@ -86,7 +123,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
     public Epic getEpic(int id) {
         super.getEpic(id);
         this.save();
-        historyManager.remove(id);
         return epicMap.get(id);
     }
 

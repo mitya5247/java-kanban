@@ -25,7 +25,6 @@ public class Main {
         Epic epic1 = new Epic("15", "15");
 
 
-    //    FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager("text.csv");
 
 
         managerTask.createSubTask(subTask0);

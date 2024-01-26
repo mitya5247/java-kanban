@@ -17,11 +17,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
     File fileName;
 
     public FileBackedTasksManager(File file) {
-        fileName = new File("/home/mitya5247/Программирование/dev/java-kanban/java-kanban/text.csv");
+        fileName = new File("text.csv");
     }
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-        File file = new File("/home/mitya5247/Программирование/dev/java-kanban/java-kanban/text.csv");
+    public static void main(String[] args) {
+        File file = new File("text.csv");
 
         FileBackedTasksManager oldManager = new FileBackedTasksManager(file);
 
@@ -278,7 +278,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
                 this.fromString(line);
             }
         } catch(FileNotFoundException e) {
-            throw new SaveException("Файл не найден");
+            throw new SaveException("Файл по пути " + fileName + " не найден");
         }
     }
 

@@ -57,7 +57,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
 
         oldManager.removeEpic(epic.getId());
 
-
         FileBackedTasksManager newManager = FileBackedTasksManager.loadFromFile(file); // создали новый менеджер из файла
         System.out.println(newManager.taskMap);
         System.out.println(newManager.subTaskMap);
@@ -173,7 +172,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
         return history;
     }
 
-    public static List<Integer> historyFromString(File file) throws FileNotFoundException {
+    public static List<Integer> historyFromString(File file) {
         try {
             Scanner scanner = new Scanner(file);
             String line = "";
@@ -189,11 +188,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
                 listIdHistory.add(Integer.parseInt(id));
             }
             return listIdHistory;
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("Файл не найден");
         } catch (NumberFormatException e) {
-            System.out.println("История в файле не найдена");
+            System.out.println("История в файле " + String.valueOf(file) + " не найдена");
             return null;
+        } catch (FileNotFoundException e) {
+            throw new SaveException("Файл " + file + " не найден");
         }
     }
 
@@ -231,8 +230,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
 
             fw.write("\n");
             fw.write(FileBackedTasksManager.historyToString(historyManager));
+        } catch (FileNotFoundException e) {
+            throw new SaveException("Файл по пути " + fileName + " не найден, проверьте путь к файлу");
         } catch (IOException e) {
-            throw new SaveException("Ошибка сохранения файла");
+            throw new SaveException("Запись в файл не произошла. Проверьте FileWriter");
+        } catch (NullPointerException e) {
+            throw new SaveException("Проверьте наличие задач в taskMap, subTaskMap, epicMap");
         }
     }
 
@@ -263,7 +266,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
         }
     }
 
-    public void taskFromFile() throws IOException {
+    public void taskFromFile() throws SaveException {
         try {
             Scanner scanner = new Scanner(fileName);
             String line = scanner.nextLine();
@@ -274,12 +277,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
                 }
                 this.fromString(line);
             }
-        } catch (IOException e) {
-            throw new SaveException("Ошибка загрузки задач из файла");
+        } catch(FileNotFoundException e) {
+            throw new SaveException("Файл не найден");
         }
     }
 
-    public static FileBackedTasksManager loadFromFile(File file) throws FileNotFoundException, IOException {
+    public static FileBackedTasksManager loadFromFile(File file) {
         FileBackedTasksManager.historyFromString(file);
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
         fileBackedTasksManager.taskFromFile();

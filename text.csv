@@ -1,7 +1,5 @@
 id,type,name,status,description,epic;
-1,TASK,4,4,4
-2,TASK,5,5,5
-4,SUBTASK,3,3,3,6
-6,EPIC,15,15,15
+3,TASK,1,1,1
+1,SUBTASK,1,1,1,0
+2,EPIC,1,1,1
 
-4,2,1,6,3,

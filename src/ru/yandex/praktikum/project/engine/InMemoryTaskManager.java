@@ -13,10 +13,10 @@ public class InMemoryTaskManager implements ManagerTask {
     int nextId = 1;
 
 
-    public HashMap<Integer, Task> taskMap = new HashMap<>();
-    public HashMap<Integer, SubTask> subTaskMap = new HashMap<>();
+    private HashMap<Integer, Task> taskMap = new HashMap<>();
+    private HashMap<Integer, SubTask> subTaskMap = new HashMap<>();
 
-    public HashMap<Integer, Epic> epicMap = new HashMap<>();
+    private HashMap<Integer, Epic> epicMap = new HashMap<>();
 
     public InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 

@@ -25,6 +25,11 @@ public class Epic extends Task {
         this.status = status;
     }
 
+    @Override
+    public String getStatus() {
+        return status;
+    }
+
 
     @Override
     public String toString() {

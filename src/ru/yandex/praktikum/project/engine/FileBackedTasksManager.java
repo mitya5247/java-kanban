@@ -25,11 +25,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
 
         FileBackedTasksManager oldManager = new FileBackedTasksManager(file);
 
-        Task task0 = new Task("4", "4", "NEW");
-        Task task1 = new Task("5", "5", "NEW");
+        Task task0 = new Task("4", "4", "NEW", 15, "10:00");
+        Task task1 = new Task("5", "5", "NEW", 20, "15:00");
 
-        SubTask subTask1 = new SubTask("2", "2", "IN_PROGRESS");
-        SubTask subTask2 = new SubTask("3", "3", "DONE");
+        SubTask subTask1 = new SubTask("2", "2", "IN_PROGRESS", 15, "16:00");
+        SubTask subTask2 = new SubTask("3", "3", "DONE", 20, "15:00");
+        SubTask subTask3 = new SubTask("3", "3", "DONE", 20, "12:00");
+
 
         Epic epic = new Epic("14", "14");
         Epic epic1 = new Epic("15", "15");
@@ -39,6 +41,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
 
         oldManager.createSubTask(subTask1);
         oldManager.createSubTask(subTask2);
+        oldManager.createSubTask(subTask3);
+
 
         oldManager.createEpic(epic);
         oldManager.createEpic(epic1);
@@ -53,14 +57,19 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
 
 
         oldManager.putSubTaskToEpic(epic, subTask1);
+        oldManager.putSubTaskToEpic(epic, subTask3);
+
         oldManager.putSubTaskToEpic(epic1, subTask2);
 
-        oldManager.removeEpic(epic.getId());
+        System.out.println("Новый метод" + oldManager.getPrioritizedTasks());
+
+
 
         FileBackedTasksManager newManager = FileBackedTasksManager.loadFromFile(file); // создали новый менеджер из файла
         System.out.println(newManager.getTaskMap());
         System.out.println(newManager.getSubTaskMap());
         System.out.println(newManager.getEpicMap());
+
 
 
     }
@@ -204,12 +213,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
 
         try (FileWriter fw = new FileWriter(String.valueOf(fileName))) {
             firstString = String.join(",", "id", "type", "name", "status",
-                    "description", "epic" + ";" + "\n");
+                    "description", "epic", "duration", "startTime", "endTime" + ";" + "\n");
             fw.write(firstString);
             for (Task testTask : getTaskMap().values()) {
                 taskString = String.join(",", String.valueOf(testTask.getId()),
-                        String.valueOf(Tasks.TASK), testTask.getName(), testTask.getDescription(),
-                        testTask.getDescription() + "\n");
+                        String.valueOf(Tasks.TASK), testTask.getName(), testTask.getStatus(),
+                        testTask.getDescription(), " " ,String.valueOf(testTask.getDuration()), testTask.getStartTimeInString(), testTask.getEndTime() + "\n");
                 fw.write(taskString);
             }
             for (SubTask testTask : getSubTaskMap().values()) {
@@ -217,14 +226,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
                     taskIdEpic = String.valueOf(((SubTask) testTask).getIdEpic());
                 }
                 taskString = String.join(",", String.valueOf(testTask.getId()),
-                        String.valueOf(Tasks.SUBTASK), testTask.getName(), testTask.getDescription(),
-                        testTask.getDescription(), taskIdEpic + "\n");
+                        String.valueOf(Tasks.SUBTASK), testTask.getName(), testTask.getStatus(),
+                        testTask.getDescription(), taskIdEpic, String.valueOf(testTask.getDuration()), testTask.getStartTimeInString(), testTask.getEndTime() + "\n");
                 fw.write(taskString);
             }
             for (Epic testTask : getEpicMap().values()) {
                 taskString = String.join(",", String.valueOf(testTask.getId()),
-                        String.valueOf(Tasks.EPIC), testTask.getName(), testTask.getDescription(),
-                        testTask.getDescription() + "\n");
+                        String.valueOf(Tasks.EPIC), testTask.getName(), testTask.getStatus(),
+                        testTask.getDescription(), " " ,String.valueOf(testTask.getDuration()), testTask.getStartTimeInString(), testTask.getEndTime() + "\n");
                 fw.write(taskString);
             }
 
@@ -243,13 +252,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
         String[] taskArray = value.split(",");
         switch (taskArray[1]) {
             case "TASK": {
-                Task task = new Task(taskArray[2], taskArray[4], taskArray[3]);
+                Task task = new Task(taskArray[2], taskArray[4], taskArray[3],  Integer.parseInt(taskArray[6]), taskArray[7]);
                 task.setId(Integer.parseInt(taskArray[0]));
                 getTaskMap().put(task.getId(), task);
                 break;
             }
             case "SUBTASK": {
-                SubTask subTask = new SubTask(taskArray[2], taskArray[4], taskArray[3]);
+                SubTask subTask = new SubTask(taskArray[2], taskArray[4], taskArray[3], Integer.parseInt(taskArray[5]), taskArray[7]);
                 subTask.setId(Integer.parseInt(taskArray[0]));
                 if (!taskArray[5].isBlank()) {
                     subTask.setIdEpic(Integer.parseInt(taskArray[5]));

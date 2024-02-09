@@ -1,5 +1,10 @@
-id,type,name,status,description,epic;
-3,TASK,1,1,1
-1,SUBTASK,1,1,1,0
-2,EPIC,1,1,1
+id,type,name,status,description,epic,duration,startTime,endTime;
+1,TASK,4,NEW,4, ,15,10:00,10:15
+2,TASK,5,NEW,5, ,20,15:00,15:20
+3,SUBTASK,2,IN_PROGRESS,2,6,15,16:00,16:15
+4,SUBTASK,3,DONE,3,7,20,15:00,15:20
+5,SUBTASK,3,DONE,3,6,20,12:00,12:20
+6,EPIC,14,IN_PROGRESS,14, ,35,12:00,16:15
+7,EPIC,15,DONE,15, ,20,15:00,15:20
 
+4,2,1,6,7,3,

@@ -5,6 +5,8 @@ import ru.yandex.praktikum.project.store.Status;
 import ru.yandex.praktikum.project.store.SubTask;
 import ru.yandex.praktikum.project.store.Task;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -168,8 +170,11 @@ public class InMemoryTaskManager implements ManagerTask {
     @Override
     public void putSubTaskToEpic(Epic epic, SubTask subTask) {
         epic.getSubTasksId().add(subTask.getId());
+     //   epic.getEndTime(subTask.getDuration());
         subTask.setIdEpic(epic.getId());
         this.updateEpic(epic);
+        this.startTimeEpic(epic);
+        this.endTimeEpic(epic);
     }
 
     @Override
@@ -222,6 +227,54 @@ public class InMemoryTaskManager implements ManagerTask {
             epic.setStatus(Status.IN_PROGRESS.name());
         }
 
+    }
+
+    private LocalTime startTimeEpic(Epic epic) {
+        LocalTime earlyTime = LocalTime.parse("23:59", DateTimeFormatter.ofPattern("HH:mm"));;
+        for (Integer id : epic.getSubTasksId()) {
+            LocalTime subTaskTime = subTaskMap.get(id).getStartTime();
+            if (subTaskTime.isBefore(earlyTime)) {
+                earlyTime = subTaskTime;
+            }
+        }
+        return epic.getStartTime(earlyTime);
+    }
+
+    private void endTimeEpic(Epic epic) {
+        int durationSum = 0;
+        LocalTime endTime = LocalTime.parse("00:00", DateTimeFormatter.ofPattern("HH:mm"));
+        for (Integer id : epic.getSubTasksId()) {
+            durationSum += subTaskMap.get(id).getDuration();
+            LocalTime subTaskTime = subTaskMap.get(id).getEndTime();
+            if (subTaskTime.isAfter(endTime)) {
+                endTime = subTaskTime;
+            }
+        }
+        epic.getEndTime(endTime);
+        epic.setDuration(durationSum);
+    }
+
+    public TreeSet<Task> getPrioritizedTasks() {
+        TreeSet<Task> treeSetTasks = new TreeSet<>( (Task task, Task t1) ->
+                task.getStartTime().isBefore(t1.getStartTime()) ? -1 : 10);
+     //   Comparator<Task> comparator = new Comparator<Task>() {
+     //       @Override
+    //        public int compare(Task task, Task t1) {
+    //            if (task.getStartTime().isBefore(t1.getStartTime())) {
+    //                return -1;
+    //            } else {
+   //                 return 10;
+   //             }
+   //         }
+  //      };
+      //  TreeSet<Task> treeSetTasks = new TreeSet<>(comparator);
+
+        treeSetTasks.addAll(subTaskMap.values());
+        treeSetTasks.addAll(taskMap.values());
+        treeSetTasks.addAll(epicMap.values());
+
+
+        return treeSetTasks;
     }
 
 }

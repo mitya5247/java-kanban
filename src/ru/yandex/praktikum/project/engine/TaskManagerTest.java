@@ -28,7 +28,7 @@ public abstract class TaskManagerTest<T extends ManagerTask> {
 
     @Test
     public void shouldCreateTask() {
-        Task task = new Task("1", "1", "NEW");
+        Task task = new Task("1", "1", "NEW", 20, "15:00");
         memoryTaskManager.createTask(task);
         fileTaskManager.createTask(task);
 
@@ -39,7 +39,7 @@ public abstract class TaskManagerTest<T extends ManagerTask> {
 
     @Test
     public void shouldCreateSubTask() {
-        SubTask subTask = new SubTask("1", "1", "NEW");
+        SubTask subTask = new SubTask("1", "1", "NEW", 20, "15:00");
         memoryTaskManager.createSubTask(subTask);
         fileTaskManager.createSubTask(subTask);
 

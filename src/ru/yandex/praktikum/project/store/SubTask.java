@@ -13,7 +13,7 @@ public class SubTask extends Task {
         this.idEpic = idEpic;
     }
 
-    public SubTask(String name, String description, String status) {
-        super(name, description, status);
+    public SubTask(String name, String description, String status, int duration, String startTime) {
+        super(name, description, status, duration, startTime);
     }
 }

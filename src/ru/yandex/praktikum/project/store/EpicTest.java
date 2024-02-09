@@ -31,8 +31,8 @@ class EpicTest {
     public void statusShouldBeNew() { // проверка статуса эпика, что он NEW
         Epic epic = new Epic("Купить молоко", "Пойти в магазин");
 
-        SubTask subTask0 = new SubTask("1", "1", "NEW");
-        SubTask subTask1 = new SubTask("2", "2", "NEW");
+        SubTask subTask0 = new SubTask("1", "1", "NEW", 20, "15-00");
+        SubTask subTask1 = new SubTask("2", "2", "NEW", 20, "15-00");
 
         InMemoryTaskManager managerTask = new InMemoryTaskManager();
         Managers managers = new Managers(managerTask);
@@ -54,8 +54,8 @@ class EpicTest {
     public void statusShouldBeDone() { // проверка статуса эпика при подзадач со статусом DONE
         Epic epic = new Epic("Купить молоко", "Пойти в магазин");
 
-        SubTask subTask0 = new SubTask("1", "1", "DONE");
-        SubTask subTask1 = new SubTask("2", "2", "DONE");
+        SubTask subTask0 = new SubTask("1", "1", "DONE", 20, "15-00");
+        SubTask subTask1 = new SubTask("2", "2", "DONE", 20, "15-00");
 
         InMemoryTaskManager managerTask = new InMemoryTaskManager();
         Managers managers = new Managers(managerTask);
@@ -77,8 +77,8 @@ class EpicTest {
     public void statusShouldBeInProgress() { // проверка статуса эпика при подзадач со статусом DONE, NEW
         Epic epic = new Epic("Купить молоко", "Пойти в магазин");
 
-        SubTask subTask0 = new SubTask("1", "1", "DONE");
-        SubTask subTask1 = new SubTask("2", "2", "NEW");
+        SubTask subTask0 = new SubTask("1", "1", "DONE", 20, "15-00");
+        SubTask subTask1 = new SubTask("2", "2", "NEW", 20, "15-00");
 
         InMemoryTaskManager managerTask = new InMemoryTaskManager();
         Managers managers = new Managers(managerTask);
@@ -100,8 +100,8 @@ class EpicTest {
     public void statusShouldBeInProgressWithSubtasksInProgress() { // проверка статуса эпика при подзадач со статусом IN_PROGRESS
         Epic epic = new Epic("Купить молоко", "Пойти в магазин");
 
-        SubTask subTask0 = new SubTask("1", "1", "IN_PROGRESS");
-        SubTask subTask1 = new SubTask("2", "2", "IN_PROGRESS");
+        SubTask subTask0 = new SubTask("1", "1", "IN_PROGRESS", 20, "15-00");
+        SubTask subTask1 = new SubTask("2", "2", "IN_PROGRESS", 20, "15-00");
 
         InMemoryTaskManager managerTask = new InMemoryTaskManager();
         Managers managers = new Managers(managerTask);

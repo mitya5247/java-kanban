@@ -146,15 +146,18 @@ public class InMemoryTaskManager implements ManagerTask {
     public int createTask(Task task) {
         task.setId(nextId);
         nextId++;
-        taskMap.put(task.getId(), task);
+        this.validationOfTasks(task);
+      //  taskMap.put(task.getId(), task);
         return task.getId();
     }
 
     @Override
     public int createSubTask(SubTask subTask) {
+       // subTaskMap.put(subTask.getId(), subTask);
         subTask.setId(nextId);
         nextId++;
-        subTaskMap.put(subTask.getId(), subTask);
+        this.validationOfTasks(subTask);
+
         return subTask.getId();
     }
 
@@ -170,7 +173,7 @@ public class InMemoryTaskManager implements ManagerTask {
     @Override
     public void putSubTaskToEpic(Epic epic, SubTask subTask) {
         epic.getSubTasksId().add(subTask.getId());
-     //   epic.getEndTime(subTask.getDuration());
+        //   epic.getEndTime(subTask.getDuration());
         subTask.setIdEpic(epic.getId());
         this.updateEpic(epic);
         this.startTimeEpic(epic);
@@ -179,12 +182,14 @@ public class InMemoryTaskManager implements ManagerTask {
 
     @Override
     public void updateTask(Task task) {
-        taskMap.put(task.getId(), task);
+    //    taskMap.put(task.getId(), task);
+        this.validationOfTasks(task);
     }
 
     @Override
     public void updateSubTask(SubTask subTask) {
-        subTaskMap.put(subTask.getId(), subTask);
+    //    subTaskMap.put(subTask.getId(), subTask);
+        this.validationOfTasks(subTask);
         if (subTaskMap.get(subTask.getId()).getIdEpic() != 0) {
             this.updateEpic(epicMap.get(subTask.getIdEpic()));
         }
@@ -230,7 +235,8 @@ public class InMemoryTaskManager implements ManagerTask {
     }
 
     private LocalTime startTimeEpic(Epic epic) {
-        LocalTime earlyTime = LocalTime.parse("23:59", DateTimeFormatter.ofPattern("HH:mm"));;
+        LocalTime earlyTime = LocalTime.parse("23:59", DateTimeFormatter.ofPattern("HH:mm"));
+        ;
         for (Integer id : epic.getSubTasksId()) {
             LocalTime subTaskTime = subTaskMap.get(id).getStartTime();
             if (subTaskTime.isBefore(earlyTime)) {
@@ -254,27 +260,65 @@ public class InMemoryTaskManager implements ManagerTask {
         epic.setDuration(durationSum);
     }
 
-    public TreeSet<Task> getPrioritizedTasks() {
-        TreeSet<Task> treeSetTasks = new TreeSet<>( (Task task, Task t1) ->
+    public List<Task> getPrioritizedTasks() {
+        TreeSet<Task> treeSetTasks = new TreeSet<>((Task task, Task t1) ->
                 task.getStartTime().isBefore(t1.getStartTime()) ? -1 : 10);
-     //   Comparator<Task> comparator = new Comparator<Task>() {
-     //       @Override
-    //        public int compare(Task task, Task t1) {
-    //            if (task.getStartTime().isBefore(t1.getStartTime())) {
-    //                return -1;
-    //            } else {
-   //                 return 10;
-   //             }
-   //         }
-  //      };
-      //  TreeSet<Task> treeSetTasks = new TreeSet<>(comparator);
+        //   Comparator<Task> comparator = new Comparator<Task>() {
+        //       @Override
+        //        public int compare(Task task, Task t1) {
+        //            if (task.getStartTime().isBefore(t1.getStartTime())) {
+        //                return -1;
+        //            } else {
+        //                 return 10;
+        //             }
+        //         }
+        //      };
+        //  TreeSet<Task> treeSetTasks = new TreeSet<>(comparator);
 
         treeSetTasks.addAll(subTaskMap.values());
         treeSetTasks.addAll(taskMap.values());
-        treeSetTasks.addAll(epicMap.values());
 
 
-        return treeSetTasks;
+        return new ArrayList<>(treeSetTasks);
+    }
+
+    public void validationOfTasks(Task newTask) {
+        if (newTask instanceof SubTask) {
+            this.validationOfSubTasksNew((SubTask) newTask);
+        } else {
+            this.validationOfTasksNew(newTask);
+        }
+    }
+    public void validationOfTasksNew(Task taskNew) {
+        if (!taskMap.isEmpty()) {
+            for (Task task : taskMap.values()) {
+                if (task.getStartTime().equals(taskNew.getStartTime())) {
+                    System.out.println("Task со временем " + task.getStartTime() + " уже существует");
+                    nextId--;
+                    return;
+                }
+            }
+            taskMap.put(taskNew.getId(), taskNew);
+
+        } else {
+            taskMap.put(taskNew.getId(), taskNew);
+        }
+
+    }
+    public void validationOfSubTasksNew(SubTask subTaskNew) {
+        if (!subTaskMap.isEmpty()) {
+            for (SubTask task : subTaskMap.values()) {
+                if (task.getStartTime().equals(subTaskNew.getStartTime())) {
+                    System.out.println("SubTask со временем " + task.getStartTime() + " уже существует");
+                    nextId--;
+                    return;
+                }
+            }
+            subTaskMap.put(subTaskNew.getId(), subTaskNew);
+        } else {
+            subTaskMap.put(subTaskNew.getId(), subTaskNew);
+        }
+
     }
 
 }

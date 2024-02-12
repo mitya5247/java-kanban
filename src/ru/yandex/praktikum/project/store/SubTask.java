@@ -1,5 +1,7 @@
 package ru.yandex.praktikum.project.store;
 
+import java.time.LocalDateTime;
+
 public class SubTask extends Task {
 
 
@@ -13,7 +15,7 @@ public class SubTask extends Task {
         this.idEpic = idEpic;
     }
 
-    public SubTask(String name, String description, String status, int duration, String startTime) {
+    public SubTask(String name, String description, String status, int duration, LocalDateTime startTime) {
         super(name, description, status, duration, startTime);
     }
 }

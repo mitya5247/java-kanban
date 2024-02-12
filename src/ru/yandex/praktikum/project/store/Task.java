@@ -16,19 +16,19 @@ public class Task {
 
     protected int duration;
 
-    protected LocalTime startTime;
+    protected LocalDateTime startTime;
 
-    protected LocalTime endTime;
+    protected LocalDateTime endTime;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-    public Task(String name, String description, String status, int duration, String startTime) {
+    public Task(String name, String description, String status, int duration, LocalDateTime startTime) {
         this.name = name;
         this.description = description;
         this.status = status;
         this.duration = duration;
 
 
-        this.startTime = LocalTime.parse(startTime, formatter);
+        this.startTime = startTime;
 
         endTime = this.startTime.plusMinutes(duration);
     }
@@ -66,11 +66,11 @@ public class Task {
         this.description = description;
     }
 
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
     public String getEndTimeInString() {
@@ -93,8 +93,8 @@ public class Task {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", duration ='" + duration + '\'' +
-                ", startTime = '" + startTime.format(formatter) + '\'' +
-                ", endTime = '" + endTime.format(formatter) + '}';
+                ", startTime = '" + startTime + '\'' +
+                ", endTime = '" + endTime + '}';
 
     }
 }

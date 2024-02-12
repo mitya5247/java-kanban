@@ -4,6 +4,8 @@ import ru.yandex.praktikum.project.engine.*;
 import ru.yandex.praktikum.project.exceptions.SaveException;
 import ru.yandex.praktikum.project.store.*;
 
+import java.time.LocalDateTime;
+
 
 public class Main {
 
@@ -11,12 +13,12 @@ public class Main {
 
         InMemoryTaskManager oldManager = new InMemoryTaskManager();
 
-        Task task0 = new Task("4", "4", "NEW", 15, "10:00");
-        Task task1 = new Task("5", "5", "NEW", 20, "15:00");
+        Task task0 = new Task("4", "4", "NEW", 15, LocalDateTime.of(2024, 1, 1, 00, 00));
+        Task task1 = new Task("5", "5", "NEW", 20, LocalDateTime.of(2024, 1, 1, 00, 00));
 
-        SubTask subTask1 = new SubTask("2", "2", "IN_PROGRESS", 15, "16:00");
-        SubTask subTask2 = new SubTask("3", "3", "DONE", 20, "15:00");
-        SubTask subTask3 = new SubTask("3", "3", "DONE", 20, "12:00");
+        SubTask subTask1 = new SubTask("2", "2", "IN_PROGRESS", 15, LocalDateTime.of(2024, 1, 1, 00, 00));
+        SubTask subTask2 = new SubTask("3", "3", "DONE", 20, LocalDateTime.of(2024, 1, 1, 00, 00));
+        SubTask subTask3 = new SubTask("3", "3", "DONE", 20, LocalDateTime.of(2024, 1, 1, 00, 00));
 
         Epic epic = new Epic("14", "14");
         Epic epic1 = new Epic("15", "15");

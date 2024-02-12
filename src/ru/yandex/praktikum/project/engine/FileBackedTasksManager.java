@@ -8,6 +8,7 @@ import ru.yandex.praktikum.project.store.Tasks;
 
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
 
         FileBackedTasksManager oldManager = new FileBackedTasksManager(file);
 
-        Task task0 = new Task("4", "4", "NEW", 15, "10:00");
-        Task task1 = new Task("5", "5", "NEW", 20, "10:00");
+        Task task0 = new Task("4", "4", "NEW", 15, LocalDateTime.of(2024, 1, 1, 00, 00));
+        Task task1 = new Task("5", "5", "NEW", 20, LocalDateTime.of(2024, 1, 1, 00, 00));
 
-        SubTask subTask1 = new SubTask("2", "2", "IN_PROGRESS", 15, "16:00");
-        SubTask subTask2 = new SubTask("3", "3", "DONE", 20, "16:00");
-        SubTask subTask3 = new SubTask("3", "3", "DONE", 20, "16:00");
+        SubTask subTask1 = new SubTask("2", "2", "IN_PROGRESS", 15, LocalDateTime.of(2024, 1, 1, 13, 00));
+        SubTask subTask2 = new SubTask("3", "3", "DONE", 20, LocalDateTime.of(2024, 1, 1, 15, 00));
+        SubTask subTask3 = new SubTask("3", "3", "DONE", 20, LocalDateTime.of(2024, 1, 1, 14, 00));
 
 
         Epic epic = new Epic("14", "14");
@@ -218,7 +219,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
             for (Task testTask : getTaskMap().values()) {
                 taskString = String.join(",", String.valueOf(testTask.getId()),
                         String.valueOf(Tasks.TASK), testTask.getName(), testTask.getStatus(),
-                        testTask.getDescription(), " " ,String.valueOf(testTask.getDuration()), testTask.getStartTimeInString(), testTask.getEndTime() + "\n");
+                        testTask.getDescription(), " " ,String.valueOf(testTask.getDuration()), String.valueOf(testTask.getStartTime()), testTask.getEndTime() + "\n");
                 fw.write(taskString);
             }
             for (SubTask testTask : getSubTaskMap().values()) {
@@ -227,13 +228,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
                 }
                 taskString = String.join(",", String.valueOf(testTask.getId()),
                         String.valueOf(Tasks.SUBTASK), testTask.getName(), testTask.getStatus(),
-                        testTask.getDescription(), taskIdEpic, String.valueOf(testTask.getDuration()), testTask.getStartTimeInString(), testTask.getEndTime() + "\n");
+                        testTask.getDescription(), taskIdEpic, String.valueOf(testTask.getDuration()), String.valueOf(testTask.getStartTime()), testTask.getEndTime() + "\n");
                 fw.write(taskString);
             }
             for (Epic testTask : getEpicMap().values()) {
                 taskString = String.join(",", String.valueOf(testTask.getId()),
                         String.valueOf(Tasks.EPIC), testTask.getName(), testTask.getStatus(),
-                        testTask.getDescription(), " " ,String.valueOf(testTask.getDuration()), testTask.getStartTimeInString(), testTask.getEndTime() + "\n");
+                        testTask.getDescription(), " " ,String.valueOf(testTask.getDuration()), String.valueOf(testTask.getStartTime()), testTask.getEndTime() + "\n");
                 fw.write(taskString);
             }
 
@@ -252,13 +253,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
         String[] taskArray = value.split(",");
         switch (taskArray[1]) {
             case "TASK": {
-                Task task = new Task(taskArray[2], taskArray[4], taskArray[3],  Integer.parseInt(taskArray[6]), taskArray[7]);
+                Task task = new Task(taskArray[2], taskArray[4], taskArray[3],  Integer.parseInt(taskArray[6]), LocalDateTime.parse(taskArray[7]));
                 task.setId(Integer.parseInt(taskArray[0]));
                 getTaskMap().put(task.getId(), task);
                 break;
             }
             case "SUBTASK": {
-                SubTask subTask = new SubTask(taskArray[2], taskArray[4], taskArray[3], Integer.parseInt(taskArray[6]), taskArray[7]);
+                SubTask subTask = new SubTask(taskArray[2], taskArray[4], taskArray[3], Integer.parseInt(taskArray[6]), LocalDateTime.parse(taskArray[7]));
                 subTask.setId(Integer.parseInt(taskArray[0]));
                 if (!taskArray[5].isBlank()) {
                     subTask.setIdEpic(Integer.parseInt(taskArray[5]));
@@ -271,8 +272,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
                 epic.setId(Integer.parseInt(taskArray[0]));
                 getEpicMap().put(epic.getId(), epic);
                 epic.setDuration(Integer.parseInt(taskArray[6]));
-                epic.getStartTime(LocalTime.parse(taskArray[7]));
-                epic.getEndTime(LocalTime.parse(taskArray[7]).plusMinutes(Integer.parseInt(taskArray[6])));
+                epic.getStartTime(LocalDateTime.parse(taskArray[7]));
+                epic.getEndTime(LocalDateTime.parse(taskArray[7]).plusMinutes(Integer.parseInt(taskArray[6])));
                 break;
             }
         }

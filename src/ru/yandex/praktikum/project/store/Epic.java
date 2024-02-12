@@ -1,5 +1,6 @@
 package ru.yandex.praktikum.project.store;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,14 +13,14 @@ public class Epic extends Task {
 
     protected ArrayList<Integer> subTasksId = new ArrayList<>();
 
-    private LocalTime endTime;
+    private LocalDateTime endTime;
 
 
     public Epic(String name, String description) {
         this.name = name;
         this.description = description;
         this.duration = 0;
-        this.startTime = LocalTime.parse("00:00", DateTimeFormatter.ofPattern("HH:mm"));
+        this.startTime = LocalDateTime.MIN;
     }
 
     public ArrayList<Integer> getSubTasksId() {
@@ -36,17 +37,17 @@ public class Epic extends Task {
         return status;
     }
 
-    public LocalTime getStartTime(LocalTime time) {
+    public LocalDateTime getStartTime(LocalDateTime time) {
         startTime = time;
         return startTime;
     }
 
-    public LocalTime getEndTime(LocalTime time) {
+    public LocalDateTime getEndTime(LocalDateTime time) {
         endTime = time;
         return endTime;
     }
 
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 

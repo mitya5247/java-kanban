@@ -192,10 +192,10 @@ public class InMemoryTaskManager implements ManagerTask {
     @Override
     public void updateTask(Task task) {
         boolean isValidationSuccess = this.validationOfTasks(task);
-        if (isValidationSuccess) {
+        if (isValidationSuccess && taskMap.containsKey(task.getId())) {
             taskMap.put(task.getId(), task);
         } else {
-            System.out.println("Task не прошел валидацию");
+            System.out.println("Task не прошел валидацию : проверьте параметры или Id");
         }
     }
 
@@ -203,20 +203,24 @@ public class InMemoryTaskManager implements ManagerTask {
     public void updateSubTask(SubTask subTask) {
         boolean isValidationSuccess = this.validationOfTasks(subTask);
 
-        if (isValidationSuccess) {
+        if (isValidationSuccess && subTaskMap.containsKey(subTask.getId())) {
             subTaskMap.put(subTask.getId(), subTask);
             if (subTaskMap.get(subTask.getId()).getIdEpic() != 0) {
                 this.updateEpic(epicMap.get(subTask.getIdEpic()));
             }
         } else {
-            System.out.println("SubTask не прошел валидацию");
+            System.out.println("SubTask не прошел валидацию: проверьте параметры или Id");
         }
     }
 
     @Override
     public void updateEpic(Epic epic) {
-        epicMap.put(epic.getId(), epic);
-        this.updateStatusEpic(epic);
+        if (epicMap.containsKey(epic.getId())) {
+            epicMap.put(epic.getId(), epic);
+            this.updateStatusEpic(epic);
+        } else {
+            System.out.println("Нет эпика с данным Id");
+        }
 
     }
 

@@ -9,8 +9,9 @@ import ru.yandex.praktikum.project.store.Task;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.InputMismatchException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public abstract class TaskManagerTest<T extends ManagerTask> {
 
@@ -21,7 +22,7 @@ public abstract class TaskManagerTest<T extends ManagerTask> {
     public void createManagers() {
         InMemoryTaskManager managerTask = new InMemoryTaskManager();
 
-        File file = new File("text.csv");
+        File file = new File("test.csv");
         FileBackedTasksManager fileManager = new FileBackedTasksManager(file);
 
         memoryTaskManager = managerTask;
@@ -189,28 +190,106 @@ public abstract class TaskManagerTest<T extends ManagerTask> {
         Task task0 = new Task("1", "1", "NEW", 20, LocalDateTime.of(2024, 1, 1, 0, 0));
         Task task1 = new Task("2", "2", "DONE", 40, LocalDateTime.of(2024, 2, 1, 0, 0));
 
-        // пустой cписок
-        memoryTaskManager.createTask(task0);
-        Assertions.assertEquals(task0, memoryTaskManager.getTaskMap().get(task0.getId()));
+        // пустой список
+        memoryTaskManager.updateTask(task0);
+        fileTaskManager.updateTask(task0);
+
 
         // стандартная работа
-        //   memoryTaskManager.createTask(task1);
+        memoryTaskManager.createTask(task0);
+        fileTaskManager.createTask(task0);
+        task1.setId(1);
         memoryTaskManager.updateTask(task1);
+        fileTaskManager.updateTask(task1);
+
         Assertions.assertEquals(task1, memoryTaskManager.getTaskMap().get(task1.getId()));
+        Assertions.assertEquals(1, memoryTaskManager.getTaskMap().size());
 
+        Assertions.assertEquals(task1, memoryTaskManager.getTaskMap().get(task1.getId()));
+        Assertions.assertEquals(1, fileTaskManager.getTaskMap().size());
 
-        // пустой список
-        //    Assertions.assertThrows(NullPointerException.class, () -> memoryTaskManager.updateTask(task0));
+        // неверный id
+        task0.setId(4);
+        memoryTaskManager.updateTask(task0);
+        fileTaskManager.updateTask(task0);
+        Assertions.assertEquals(task1, memoryTaskManager.getTaskMap().get(task1.getId()));
+        Assertions.assertEquals(task1, fileTaskManager.getTaskMap().get(task1.getId()));
 
 
     }
 
     @Test
     public void shouldUpdateSubTask() {
+        SubTask subTask0 = new SubTask("1", "1", "NEW", 20, LocalDateTime.of(2024, 1, 1, 0, 0));
+        SubTask subTask1 = new SubTask("1", "1", "NEW", 20, LocalDateTime.of(2024, 2, 1, 0, 0));
+
+        // пустой список
+        memoryTaskManager.updateTask(subTask0);
+        fileTaskManager.updateTask(subTask0);
+
+
+        // стандартная работа
+        memoryTaskManager.createTask(subTask0);
+        fileTaskManager.createTask(subTask0);
+        subTask1.setId(1);
+        memoryTaskManager.updateTask(subTask1);
+        fileTaskManager.updateTask(subTask1);
+
+        Assertions.assertEquals(subTask1, memoryTaskManager.getTaskMap().get(subTask1.getId()));
+        Assertions.assertEquals(1, memoryTaskManager.getTaskMap().size());
+
+        Assertions.assertEquals(subTask1, memoryTaskManager.getTaskMap().get(subTask1.getId()));
+        Assertions.assertEquals(1, fileTaskManager.getTaskMap().size());
+
+        // неверный id
+        subTask0.setId(4);
+        memoryTaskManager.updateTask(subTask0);
+        fileTaskManager.updateTask(subTask0);
+        Assertions.assertEquals(subTask1, memoryTaskManager.getTaskMap().get(subTask1.getId()));
+        Assertions.assertEquals(subTask1, fileTaskManager.getTaskMap().get(subTask1.getId()));
+
+
+
     }
 
     @Test
     public void shouldUpdateEpic() {
+        Epic epic0 = new Epic("1", "1");
+        Epic epic1 = new Epic("1", "1");
+
+
+        // пустой список
+        memoryTaskManager.updateEpic(epic0);
+        fileTaskManager.updateEpic(epic0);
+        Assertions.assertEquals(0, memoryTaskManager.getEpicMap().size());
+        Assertions.assertEquals(0, fileTaskManager.getEpicMap().size());
+
+
+        // стандартная работа
+        memoryTaskManager.createEpic(epic0);
+        fileTaskManager.createEpic(epic0);
+
+        epic1.setId(epic0.getId());
+
+        memoryTaskManager.updateEpic(epic1);
+        fileTaskManager.updateEpic(epic1);
+
+        Assertions.assertEquals(1, memoryTaskManager.getEpicMap().size());
+        Assertions.assertEquals(epic1, memoryTaskManager.getEpicMap().get(epic0.getId()));
+
+        Assertions.assertEquals(1, fileTaskManager.getEpicMap().size());
+        Assertions.assertEquals(epic1, fileTaskManager.getEpicMap().get(epic0.getId()));
+
+        // неверный id
+
+        epic0.setId(4);
+        memoryTaskManager.updateEpic(epic0);
+        fileTaskManager.updateEpic(epic0);
+        Assertions.assertEquals(epic1, memoryTaskManager.getEpicMap().get(epic1.getId()));
+        Assertions.assertEquals(epic1, fileTaskManager.getEpicMap().get(epic1.getId()));
+
+
+
     }
 
     @Test
@@ -241,6 +320,36 @@ public abstract class TaskManagerTest<T extends ManagerTask> {
         /*
         Неправильный Id в данном случае задать нельзя, так как метод getIdEpic() не приминает на вхож никаких аргументов
          */
+    }
+
+    @Test
+    public void shouldPutSubTaskToEpic() {
+        SubTask subTask = new SubTask("1", "1", "NEW", 40, LocalDateTime.of(2024, 3, 1, 0, 0));
+        Epic epic = new Epic("1", "1");
+
+        SubTask subTask1 = new SubTask("1", "1", "NEW", 40, LocalDateTime.of(2024, 4, 1, 0, 0));
+
+        memoryTaskManager.createSubTask(subTask);
+        memoryTaskManager.createEpic(epic);
+
+        // пустой список
+        Assertions.assertTrue(epic.getSubTasksId().isEmpty());
+
+        fileTaskManager.createSubTask(subTask);
+        fileTaskManager.createEpic(epic);
+
+        // нормальная работа метода
+        memoryTaskManager.putSubTaskToEpic(epic, subTask);
+        fileTaskManager.putSubTaskToEpic(epic, subTask);
+
+
+        Assertions.assertEquals(subTask.getId(), epic.getSubTasksId().get(0));
+
+        // неправильная работа метода
+
+
+        Assertions.assertThrows(NullPointerException.class, () -> memoryTaskManager.putSubTaskToEpic(epic, subTask1));
+
     }
 
     @Test
@@ -474,22 +583,58 @@ public abstract class TaskManagerTest<T extends ManagerTask> {
 
     }
 
-    @AfterEach
-    public void clearMap() {
-        memoryTaskManager.removeEpicsAll();
-        memoryTaskManager.removeSubTasksAll();
-        memoryTaskManager.removeTasksAll();
+    @Test
+    public void shouldMakeValidation() {
+        SubTask subTask0 = new SubTask("1", "1", "NEW", 40, LocalDateTime.of(2023, 3, 1, 0, 0));
+        SubTask subTask1 = new SubTask("1", "1", "NEW", 40, LocalDateTime.of(2023, 3, 1, 0, 0));
 
-        fileTaskManager.removeEpicsAll();
-        fileTaskManager.removeSubTasksAll();
-        fileTaskManager.removeTasksAll();
+        Task task0 = new Task("1", "1", "NEW", 40, LocalDateTime.of(2023, 3, 1, 0, 0));
+        Task task1 = new Task("1", "1", "NEW", 40, LocalDateTime.of(2023, 3, 1, 0, 0));
+
+        memoryTaskManager.createTask(task0); // валидация таска
+        memoryTaskManager.createTask(task1);
+
+        memoryTaskManager.createSubTask(subTask0); // валидация сабтаска
+        memoryTaskManager.createSubTask(subTask1);
 
     }
-    @AfterAll
-    public static void countMap() {
-        System.out.println(memoryTaskManager.getTaskMap());
-        System.out.println(memoryTaskManager.getSubTaskMap());
-        System.out.println(memoryTaskManager.getEpicMap());
+
+    @Test
+    public void shouldGetPrioritizedTasks() {
+        SubTask subTask0 = new SubTask("1", "1", "NEW", 40, LocalDateTime.of(2023, 3, 1, 10, 0));
+        SubTask subTask1 = new SubTask("1", "1", "NEW", 40, LocalDateTime.of(2023, 3, 1, 5, 0));
+
+        Task task0 = new Task("1", "1", "NEW", 40, LocalDateTime.of(2023, 3, 1, 2, 0));
+        Task task1 = new Task("1", "1", "NEW", 40, LocalDateTime.of(2023, 3, 1, 12, 0));
+
+        memoryTaskManager.createTask(task0);
+        memoryTaskManager.createTask(task1);
+
+        memoryTaskManager.createSubTask(subTask0);
+        memoryTaskManager.createSubTask(subTask1);
+
+        List<Task> tasks = List.of(task0, task1, subTask0, subTask1);
+
+        LocalDateTime earlyTime = tasks.get(0).getStartTime();
+
+        LocalDateTime lateTime = tasks.get(0).getStartTime();
+
+        for (Task task : tasks) {
+            if (earlyTime.isAfter(task.getStartTime())) {
+                earlyTime = task.getStartTime();
+            }
+            if (lateTime.isBefore(task.getStartTime())) {
+                lateTime = task.getStartTime();
+            }
+        }
+
+        memoryTaskManager.getPrioritizedTasks();
+
+        Assertions.assertEquals(earlyTime, memoryTaskManager.getPrioritizedTasks().get(0)
+                .getStartTime()); // проверка первого элемента списка как самого раннего
+        Assertions.assertEquals(lateTime, memoryTaskManager.getPrioritizedTasks().get
+                (memoryTaskManager.getPrioritizedTasks().size() - 1)
+                .getStartTime()); // проверка первого элемента списка как самого позднего
 
     }
 

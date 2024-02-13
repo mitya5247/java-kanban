@@ -5,6 +5,8 @@ import ru.yandex.praktikum.project.store.Epic;
 import ru.yandex.praktikum.project.store.SubTask;
 import ru.yandex.praktikum.project.store.Task;
 import ru.yandex.praktikum.project.store.Tasks;
+import ru.yandex.praktikum.project.engine.Managers;
+
 
 
 import java.io.*;
@@ -19,7 +21,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
     File fileName;
 
     public FileBackedTasksManager(File file) {
-        fileName = new File("text.csv");
+        fileName = file;
     }
 
     public static void main(String[] args) {
@@ -296,10 +298,39 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
     }
 
     public static FileBackedTasksManager loadFromFile(File file) {
-        FileBackedTasksManager.historyFromString(file);
+        List<Integer> idTasks = FileBackedTasksManager.historyFromString(file);
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
         fileBackedTasksManager.taskFromFile();
+        if (!idTasks.isEmpty()) {
+            for (int taskId : idTasks) {
+                if (fileBackedTasksManager.getTaskMap().containsKey(taskId)) {
+                    fileBackedTasksManager.getTask(taskId);
+                }
+                if (fileBackedTasksManager.getSubTaskMap().containsKey(taskId)) {
+                    fileBackedTasksManager.getSubTask(taskId);
+                }
+                if (fileBackedTasksManager.getEpicMap().containsKey(taskId)) {
+                    fileBackedTasksManager.getEpic(taskId);
+                }
+            }
+        }
+        Managers.managerHistory = fileBackedTasksManager.historyManager;
         return fileBackedTasksManager;
+    }
+
+    @Override
+    public void removeTasksAll() {
+        super.removeTasksAll();
+        save();
+    }
+    @Override
+    public void removeSubTasksAll() {
+        super.removeSubTasksAll();
+        save();
+    }   @Override
+    public void removeEpicsAll() {
+        super.removeEpicsAll();
+        save();
     }
 
 

@@ -1,7 +1,10 @@
-package ru.yandex.praktikum.project.engine;
+package ru.yandex.praktikum.project.tests;
 
 
 import org.junit.jupiter.api.*;
+import ru.yandex.praktikum.project.engine.FileBackedTasksManager;
+import ru.yandex.praktikum.project.engine.InMemoryTaskManager;
+import ru.yandex.praktikum.project.engine.ManagerTask;
 import ru.yandex.praktikum.project.store.Epic;
 import ru.yandex.praktikum.project.store.Status;
 import ru.yandex.praktikum.project.store.SubTask;
@@ -9,7 +12,6 @@ import ru.yandex.praktikum.project.store.Task;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -318,7 +320,7 @@ public abstract class TaskManagerTest<T extends ManagerTask> {
         Assertions.assertEquals(expected, fileTaskManager.getSubTaskMap().get(subTask.getId()).getIdEpic());
 
         /*
-        Неправильный Id в данном случае задать нельзя, так как метод getIdEpic() не приминает на вхож никаких аргументов
+        Неправильный Id в данном случае задать нельзя, так как метод getIdEpic() не приминает на вход никаких аргументов
          */
     }
 

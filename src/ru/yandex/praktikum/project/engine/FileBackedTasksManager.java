@@ -5,13 +5,11 @@ import ru.yandex.praktikum.project.store.Epic;
 import ru.yandex.praktikum.project.store.SubTask;
 import ru.yandex.praktikum.project.store.Task;
 import ru.yandex.praktikum.project.store.Tasks;
-import ru.yandex.praktikum.project.engine.Managers;
 
 
 
 import java.io.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -52,7 +50,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
         oldManager.createEpic(epic1);
 
         oldManager.getSubTask(subTask1.getId());
-    //    oldManager.getSubTask(subTask2.getId());
         oldManager.getTask(task0.getId());
         oldManager.getEpic(epic.getId());
         oldManager.getEpic(epic1.getId());
@@ -60,9 +57,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
 
 
         oldManager.putSubTaskToEpic(epic, subTask1);
-  //      oldManager.putSubTaskToEpic(epic, subTask3);
 
-  //      oldManager.putSubTaskToEpic(epic1, subTask2);
 
         System.out.println("Новый метод" + oldManager.getPrioritizedTasks());
 
@@ -75,6 +70,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
 
 
 
+    }
+
+    public File getFileName() {
+        return fileName;
     }
 
     @Override

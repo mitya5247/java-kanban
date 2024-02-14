@@ -1,4 +1,4 @@
-package ru.yandex.praktikum.project.engine;
+package ru.yandex.praktikum.project.tests;
 
 public class MemoryTaskManagerTest extends TaskManagerTest {
 }

@@ -1,6 +1,8 @@
-package ru.yandex.praktikum.project.engine;
+package ru.yandex.praktikum.project.tests;
 
 import org.junit.jupiter.api.*;
+import ru.yandex.praktikum.project.engine.FileBackedTasksManager;
+import ru.yandex.praktikum.project.engine.Managers;
 import ru.yandex.praktikum.project.store.Epic;
 import ru.yandex.praktikum.project.store.SubTask;
 import ru.yandex.praktikum.project.store.Task;
@@ -57,7 +59,7 @@ public class FileBackedTasksManagerTest extends TaskManagerTest {
 
 
         // пустой список задач
-        Assertions.assertEquals(0, fileBackedTasksManager.fileName.length());
+        Assertions.assertEquals(0, fileBackedTasksManager.getFileName().length());
 
         // эпик без подзадач
         fileBackedTasksManager.createEpic(epic);
@@ -73,7 +75,7 @@ public class FileBackedTasksManagerTest extends TaskManagerTest {
         fileBackedTasksManager.createSubTask(subTask);
 
         // список задач заполнен, истории нет
-        Assertions.assertTrue(fileBackedTasksManager.fileName.length() != 0);
+        Assertions.assertTrue(fileBackedTasksManager.getFileName().length() != 0);
         Assertions.assertNull(FileBackedTasksManager.historyFromString(file));
 
     }

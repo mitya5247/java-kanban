@@ -1,8 +1,12 @@
-package ru.yandex.praktikum.project.engine;
+package ru.yandex.praktikum.project.tests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import ru.yandex.praktikum.project.engine.InMemoryHistoryManager;
+import ru.yandex.praktikum.project.engine.InMemoryTaskManager;
+import ru.yandex.praktikum.project.engine.ManagerTask;
+import ru.yandex.praktikum.project.engine.Managers;
 import ru.yandex.praktikum.project.store.Epic;
 import ru.yandex.praktikum.project.store.SubTask;
 import ru.yandex.praktikum.project.store.Task;

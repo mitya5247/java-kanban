@@ -159,7 +159,6 @@ public class InMemoryTaskManager implements ManagerTask {
 
     @Override
     public int createSubTask(SubTask subTask) {
-        // subTaskMap.put(subTask.getId(), subTask);
         subTask.setId(nextId);
         nextId++;
         if (this.validationOfTasks(subTask)) {
@@ -182,7 +181,6 @@ public class InMemoryTaskManager implements ManagerTask {
     @Override
     public void putSubTaskToEpic(Epic epic, SubTask subTask) {
         epic.getSubTasksId().add(subTask.getId());
-        //   epic.getEndTime(subTask.getDuration());
         subTask.setIdEpic(epic.getId());
         this.updateEpic(epic);
         this.startTimeEpic(epic);

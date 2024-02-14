@@ -14,11 +14,11 @@ public class Main {
         InMemoryTaskManager oldManager = new InMemoryTaskManager();
 
         Task task0 = new Task("4", "4", "NEW", 15, LocalDateTime.of(2024, 1, 1, 00, 00));
-        Task task1 = new Task("5", "5", "NEW", 20, LocalDateTime.of(2024, 1, 1, 00, 00));
+        Task task1 = new Task("5", "5", "NEW", 20, LocalDateTime.of(2024, 2, 1, 00, 00));
 
         SubTask subTask1 = new SubTask("2", "2", "IN_PROGRESS", 15, LocalDateTime.of(2024, 1, 1, 00, 00));
-        SubTask subTask2 = new SubTask("3", "3", "DONE", 20, LocalDateTime.of(2024, 1, 1, 00, 00));
-        SubTask subTask3 = new SubTask("3", "3", "DONE", 20, LocalDateTime.of(2024, 1, 1, 00, 00));
+        SubTask subTask2 = new SubTask("3", "3", "DONE", 20, LocalDateTime.of(2024, 2, 1, 00, 00));
+        SubTask subTask3 = new SubTask("3", "3", "DONE", 20, LocalDateTime.of(2024, 3, 1, 00, 00));
 
         Epic epic = new Epic("14", "14");
         Epic epic1 = new Epic("15", "15");

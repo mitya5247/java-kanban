@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import ru.yandex.praktikum.project.engine.FileBackedTasksManager;
+import ru.yandex.praktikum.project.server.KVServer;
 import ru.yandex.praktikum.project.store.Epic;
 import ru.yandex.praktikum.project.store.SubTask;
 import ru.yandex.praktikum.project.store.Task;
@@ -27,9 +28,7 @@ public class HttpTaskServer {
     static final int PORT = 8080;
 
     static Gson gson = new Gson();
-
-    static Gson gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-
+    
     static File file = new File("testNew.csv");
 
     static public FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
@@ -38,8 +37,44 @@ public class HttpTaskServer {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        HttpTaskServer httpTaskServer = new HttpTaskServer();
-        httpTaskServer.createServer();
+      //  HttpTaskServer httpTaskServer = new HttpTaskServer();
+      //  httpTaskServer.createServer();
+
+        KVServer kvServer = new KVServer();
+        kvServer.start();
+
+        KVTaskClient kvTaskClient = new KVTaskClient("http://localhost:8080");
+
+
+
+        String key = "task";
+        String key1 = "task1";
+
+
+
+        Task task = new Task("1", "1", "NEW", 12, LocalDateTime.of(2023, 2, 12, 14, 3));
+        Task task1 = new Task("2", "1", "NEW", 12, LocalDateTime.of(2023, 3, 12, 14, 3));
+        Epic epic = new Epic("name", "fsd");
+
+
+        String taskJson = gson.toJson(task);
+        String taskJson1 = gson.toJson(task1);
+        String taskJsonEpic = gson.toJson(epic);
+
+
+
+        kvTaskClient.put(key, taskJson);
+        kvTaskClient.put(key1, taskJson1);
+        kvTaskClient.put(key1, taskJsonEpic);
+
+
+
+        System.out.println("Первый ключ" + kvTaskClient.load(key));
+        System.out.println("Второй ключ" + kvTaskClient.load(key1));
+
+
+
+
 
 
 

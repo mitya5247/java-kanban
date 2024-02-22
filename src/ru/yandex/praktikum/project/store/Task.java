@@ -20,8 +20,6 @@ public class Task {
     protected LocalDateTime startTime;
 
     protected LocalDateTime endTime;
- //   @Expose
-            // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public Task(String name, String description, String status, int duration, LocalDateTime startTime) {
         this.name = name;

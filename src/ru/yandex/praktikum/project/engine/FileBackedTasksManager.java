@@ -7,7 +7,6 @@ import ru.yandex.praktikum.project.store.Task;
 import ru.yandex.praktikum.project.store.Tasks;
 
 
-
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -62,12 +61,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
         System.out.println("Новый метод" + oldManager.getPrioritizedTasks());
 
 
-
         FileBackedTasksManager newManager = FileBackedTasksManager.loadFromFile(file); // создали новый менеджер из файла
         System.out.println(newManager.getTaskMap());
         System.out.println(newManager.getSubTaskMap());
         System.out.println(newManager.getEpicMap());
-
 
 
     }
@@ -220,7 +217,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
             for (Task testTask : getTaskMap().values()) {
                 taskString = String.join(",", String.valueOf(testTask.getId()),
                         String.valueOf(Tasks.TASK), testTask.getName(), testTask.getStatus(),
-                        testTask.getDescription(), " " ,String.valueOf(testTask.getDuration()), String.valueOf(testTask.getStartTime()), testTask.getEndTime() + "\n");
+                        testTask.getDescription(), " ", String.valueOf(testTask.getDuration()), String.valueOf(testTask.getStartTime()), testTask.getEndTime() + "\n");
                 fw.write(taskString);
             }
             for (SubTask testTask : getSubTaskMap().values()) {
@@ -235,7 +232,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
             for (Epic testTask : getEpicMap().values()) {
                 taskString = String.join(",", String.valueOf(testTask.getId()),
                         String.valueOf(Tasks.EPIC), testTask.getName(), testTask.getStatus(),
-                        testTask.getDescription(), " " ,String.valueOf(testTask.getDuration()), String.valueOf(testTask.getStartTime()), testTask.getEndTime() + "\n");
+                        testTask.getDescription(), " ", String.valueOf(testTask.getDuration()), String.valueOf(testTask.getStartTime()), testTask.getEndTime() + "\n");
                 fw.write(taskString);
             }
 
@@ -254,7 +251,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
         String[] taskArray = value.split(",");
         switch (taskArray[1]) {
             case "TASK": {
-                Task task = new Task(taskArray[2], taskArray[4], taskArray[3],  Integer.parseInt(taskArray[6]), LocalDateTime.parse(taskArray[7]));
+                Task task = new Task(taskArray[2], taskArray[4], taskArray[3], Integer.parseInt(taskArray[6]), LocalDateTime.parse(taskArray[7]));
                 task.setId(Integer.parseInt(taskArray[0]));
                 getTaskMap().put(task.getId(), task);
                 break;
@@ -291,7 +288,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
                 }
                 this.fromString(line);
             }
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             throw new SaveException("Файл по пути " + fileName + " не найден");
         }
     }
@@ -322,11 +319,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements Manag
         super.removeTasksAll();
         save();
     }
+
     @Override
     public void removeSubTasksAll() {
         super.removeSubTasksAll();
         save();
-    }   @Override
+    }
+
+    @Override
     public void removeEpicsAll() {
         super.removeEpicsAll();
         save();

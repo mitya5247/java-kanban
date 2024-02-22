@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Managers {
     InMemoryTaskManager managerTask;
+    static FileBackedTasksManager fileManager;
     static InMemoryHistoryManager managerHistory;
 
     public Managers(InMemoryTaskManager managerTask) {
@@ -13,6 +14,10 @@ public class Managers {
 
     public ManagerTask getDefault() {
         return managerTask;
+    }
+
+    public static FileBackedTasksManager getDefaultFileBackedTaskManager() {
+        return fileManager;
     }
 
     public static InMemoryHistoryManager getDefaultHistory() {

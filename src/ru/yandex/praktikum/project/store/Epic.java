@@ -1,5 +1,7 @@
 package ru.yandex.praktikum.project.store;
 
+import com.google.gson.annotations.Expose;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -7,13 +9,11 @@ import java.util.ArrayList;
 
 public class Epic extends Task {
 
-
-    protected String status = "NEW";
-
+    protected transient String status = "NEW";
 
     protected ArrayList<Integer> subTasksId = new ArrayList<>();
 
-    private LocalDateTime endTime;
+    private transient LocalDateTime endTime;
 
 
     public Epic(String name, String description) {
@@ -22,6 +22,7 @@ public class Epic extends Task {
         this.duration = 0;
         this.startTime = LocalDateTime.MIN;
     }
+
 
     public ArrayList<Integer> getSubTasksId() {
         return subTasksId;

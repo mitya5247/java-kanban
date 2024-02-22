@@ -1,7 +1,8 @@
 package ru.yandex.praktikum.project.store;
 
+import com.google.gson.annotations.Expose;
+
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Task {
@@ -19,7 +20,8 @@ public class Task {
     protected LocalDateTime startTime;
 
     protected LocalDateTime endTime;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+ //   @Expose
+            // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public Task(String name, String description, String status, int duration, LocalDateTime startTime) {
         this.name = name;
@@ -73,12 +75,12 @@ public class Task {
     public LocalDateTime getStartTime() {
         return startTime;
     }
-    public String getEndTimeInString() {
-        return endTime.format(formatter);
+    public LocalDateTime getEndTimeInString() {
+        return endTime;
     }
 
-    public String getStartTimeInString() {
-        return startTime.format(formatter);
+    public LocalDateTime getStartTimeInString() {
+        return startTime;
     }
     public int getDuration() {
         return duration;

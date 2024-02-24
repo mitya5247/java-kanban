@@ -48,8 +48,9 @@ public class KVServer { // сервер, на котором хранятся з
                 }
             }
 			String key = stringBuilder.toString();
-		//	String tasks = data.get(key);
-		//	System.out.println(tasks);
+			String tasks = data.get(key);
+			this.sendText(h, tasks);
+			//	System.out.println(tasks);
 		}
 
 
@@ -128,5 +129,9 @@ public class KVServer { // сервер, на котором хранятся з
 		h.getResponseHeaders().add("Content-Type", "application/json");
 		h.sendResponseHeaders(200, resp.length);
 		h.getResponseBody().write(resp);
+	}
+
+	public Map<String, String> getData() {
+		return data;
 	}
 }

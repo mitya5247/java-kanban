@@ -7,13 +7,15 @@ public class Managers {
     static FileBackedTasksManager fileManager;
     static InMemoryHistoryManager managerHistory;
 
+    static HttpTaskManager httpManager;
+
     public Managers(InMemoryTaskManager managerTask) {
         this.managerTask = managerTask;
         managerHistory = managerTask.historyManager;
     }
 
     public ManagerTask getDefault() {
-        return managerTask;
+        return httpManager;
     }
 
     public static FileBackedTasksManager getDefaultFileBackedTaskManager() {

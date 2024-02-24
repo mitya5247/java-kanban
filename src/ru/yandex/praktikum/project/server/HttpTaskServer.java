@@ -1,24 +1,19 @@
-package ru.yandex.praktikum.project.http;
+package ru.yandex.praktikum.project.server;
 
 import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import ru.yandex.praktikum.project.engine.FileBackedTasksManager;
-import ru.yandex.praktikum.project.server.KVServer;
+import ru.yandex.praktikum.project.client.KVTaskClient;
 import ru.yandex.praktikum.project.store.Epic;
 import ru.yandex.praktikum.project.store.SubTask;
 import ru.yandex.praktikum.project.store.Task;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
@@ -31,54 +26,11 @@ public class HttpTaskServer {
     
     static File file = new File("testNew.csv");
 
-    static public FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
+    public static FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
 
     public HttpTaskServer() {
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-      //  HttpTaskServer httpTaskServer = new HttpTaskServer();
-      //  httpTaskServer.createServer();
-
-        KVServer kvServer = new KVServer();
-        kvServer.start();
-
-        KVTaskClient kvTaskClient = new KVTaskClient("http://localhost:8080");
-
-
-
-        String key = "task";
-        String key1 = "task1";
-
-
-
-        Task task = new Task("1", "1", "NEW", 12, LocalDateTime.of(2023, 2, 12, 14, 3));
-        Task task1 = new Task("2", "1", "NEW", 12, LocalDateTime.of(2023, 3, 12, 14, 3));
-        Epic epic = new Epic("name", "fsd");
-
-
-        String taskJson = gson.toJson(task);
-        String taskJson1 = gson.toJson(task1);
-        String taskJsonEpic = gson.toJson(epic);
-
-
-
-        kvTaskClient.put(key, taskJson);
-        kvTaskClient.put(key1, taskJson1);
-        kvTaskClient.put(key1, taskJsonEpic);
-
-
-
-        System.out.println("Первый ключ" + kvTaskClient.load(key));
-        System.out.println("Второй ключ" + kvTaskClient.load(key1));
-
-
-
-
-
-
-
-    }
 
 
     public void createServer() throws IOException {
@@ -97,12 +49,14 @@ public class HttpTaskServer {
 
 
             httpServer.start();
-            //  return httpServer;
         } catch (IOException e) {
             throw new IOException("Проблема с запуском сервера");
         }
     }
 
+    public FileBackedTasksManager getFileBackedTaskManager() {
+        return fileBackedTasksManager;
+    }
 
     static class GetTaskHandler implements HttpHandler {
         @Override
@@ -121,7 +75,7 @@ public class HttpTaskServer {
                 }
                 case "POST": {
                     this.handlePOSTAction(httpExchange);
-                    this.writeResponse(httpExchange, "POST - запрос успешно обработан", 200);
+        //            this.writeResponse(httpExchange, "POST - запрос успешно обработан", 200);
                     break;
                 }
                 case "DELETE": {
@@ -190,7 +144,7 @@ public class HttpTaskServer {
                     break;
                 }
                 case "epic": {
-                    if (pathArray.length == 4 && fileBackedTasksManager.getEpicMap().containsKey(Integer.parseInt(pathArray[2]))) {
+                    if (pathArray.length == 4 && fileBackedTasksManager.getEpicMap().containsKey(Integer.parseInt(pathArray[3]))) {
                         Epic epic = fileBackedTasksManager.getEpic(Integer.parseInt(pathArray[3]));
                         String jsonList = gson.toJson(epic);
                         this.writeResponse(httpExchange, jsonList, 200);
@@ -210,7 +164,6 @@ public class HttpTaskServer {
             }
         }
         private void handlePOSTAction(HttpExchange httpExchange) throws IOException {
-            System.out.println("Обрабатываем запрос на создание задачи /tasks/task");
 
             String[] pathArray = httpExchange.getRequestURI().getPath().split("/");
             System.out.println(pathArray[2]);
@@ -322,6 +275,8 @@ public class HttpTaskServer {
             }
 
         }
+
+
 
 
 

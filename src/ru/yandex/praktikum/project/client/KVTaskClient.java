@@ -1,11 +1,10 @@
-package ru.yandex.praktikum.project.http;
+package ru.yandex.praktikum.project.client;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.Charset;
 
 public class KVTaskClient { // клиент регистрируется на сервере
 
@@ -27,6 +26,10 @@ public class KVTaskClient { // клиент регистрируется на с
         HttpResponse.BodyHandler<String> bodyHandler = HttpResponse.BodyHandlers.ofString();
         HttpResponse<String> response = client.send(request, bodyHandler);
         API_TOKEN = response.body();
+    }
+
+    public String getAPI_TOKEN() {
+        return API_TOKEN;
     }
 
     public void put(String key, String json) throws IOException, InterruptedException {

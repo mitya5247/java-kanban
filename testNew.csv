@@ -1,2 +1,4 @@
 id,type,name,status,description,epic,duration,startTime,endTime;
+3,TASK,1,NEW,1, ,12,2023-02-12T14:03,2023-02-12T14:15
+2,EPIC,1,null,1, ,0,-999999999-01-01T00:00,null
 

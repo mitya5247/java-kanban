@@ -23,14 +23,13 @@ public class HttpTaskServer {
     static final int PORT = 8080;
 
     static Gson gson = new Gson();
-    
+
     static File file = new File("testNew.csv");
 
     public static FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
 
     public HttpTaskServer() {
     }
-
 
 
     public void createServer() throws IOException {
@@ -41,7 +40,6 @@ public class HttpTaskServer {
             httpServer.createContext("/tasks/task/1", new GetTaskHandler());
             httpServer.createContext("/tasks/epic/1", new GetTaskHandler());
             httpServer.createContext("/tasks/subtask/1", new GetTaskHandler());
-
 
 
             httpServer.createContext("/tasks/subtask", new GetTaskHandler());
@@ -75,7 +73,6 @@ public class HttpTaskServer {
                 }
                 case "POST": {
                     this.handlePOSTAction(httpExchange);
-        //            this.writeResponse(httpExchange, "POST - запрос успешно обработан", 200);
                     break;
                 }
                 case "DELETE": {
@@ -100,6 +97,7 @@ public class HttpTaskServer {
                 throw new RuntimeException(e);
             }
         }
+
         private String getPath(HttpExchange httpExchange) {
             String path = httpExchange.getRequestURI().getPath();
             String[] pathArray = path.split("/");
@@ -163,6 +161,7 @@ public class HttpTaskServer {
 
             }
         }
+
         private void handlePOSTAction(HttpExchange httpExchange) throws IOException {
 
             String[] pathArray = httpExchange.getRequestURI().getPath().split("/");
@@ -189,7 +188,7 @@ public class HttpTaskServer {
                         SubTask taskNew = gson.fromJson(subTaskString, SubTask.class);
                         fileBackedTasksManager.createSubTask(taskNew);
                         System.out.println(fileBackedTasksManager.getSubTaskMap());
-                    } catch (MissingFormatArgumentException |InputMismatchException | NullPointerException e) {
+                    } catch (MissingFormatArgumentException | InputMismatchException | NullPointerException e) {
                         System.out.println("Ошибка преобразования json");
                     }
                 }
@@ -213,6 +212,7 @@ public class HttpTaskServer {
                     break;
             }
         }
+
         private void handleDELETEAction(HttpExchange httpExchange) throws IOException {
             System.out.println("Обрабатываем запрос на удаление задачи /tasks/task");
 
@@ -275,14 +275,7 @@ public class HttpTaskServer {
             }
 
         }
-
-
-
-
-
-
     }
-
 
 
 }

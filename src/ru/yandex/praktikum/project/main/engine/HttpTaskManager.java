@@ -1,16 +1,15 @@
-package ru.yandex.praktikum.project.engine;
+package ru.yandex.praktikum.project.main.engine;
 
 import com.google.gson.Gson;
-import ru.yandex.praktikum.project.client.KVTaskClient;
-import ru.yandex.praktikum.project.exceptions.SaveException;
-import ru.yandex.praktikum.project.server.KVServer;
-import ru.yandex.praktikum.project.store.Epic;
-import ru.yandex.praktikum.project.store.SubTask;
-import ru.yandex.praktikum.project.store.Task;
+import ru.yandex.praktikum.project.main.client.KVTaskClient;
+import ru.yandex.praktikum.project.main.exceptions.SaveException;
+import ru.yandex.praktikum.project.main.server.KVServer;
+import ru.yandex.praktikum.project.main.store.Epic;
+import ru.yandex.praktikum.project.main.store.SubTask;
+import ru.yandex.praktikum.project.main.store.Task;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.time.LocalDateTime;
 
 public class HttpTaskManager extends FileBackedTasksManager{

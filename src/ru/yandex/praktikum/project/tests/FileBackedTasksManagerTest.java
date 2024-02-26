@@ -1,11 +1,11 @@
 package ru.yandex.praktikum.project.tests;
 
 import org.junit.jupiter.api.*;
-import ru.yandex.praktikum.project.engine.FileBackedTasksManager;
-import ru.yandex.praktikum.project.engine.Managers;
-import ru.yandex.praktikum.project.store.Epic;
-import ru.yandex.praktikum.project.store.SubTask;
-import ru.yandex.praktikum.project.store.Task;
+import ru.yandex.praktikum.project.main.engine.FileBackedTasksManager;
+import ru.yandex.praktikum.project.main.engine.Managers;
+import ru.yandex.praktikum.project.main.store.Epic;
+import ru.yandex.praktikum.project.main.store.SubTask;
+import ru.yandex.praktikum.project.main.store.Task;
 
 import java.io.*;
 import java.time.LocalDateTime;

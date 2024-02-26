@@ -1,4 +1,4 @@
-package ru.yandex.praktikum.project.store;
+package ru.yandex.praktikum.project.main.store;
 
 public enum Tasks {
     TASK,

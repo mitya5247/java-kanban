@@ -1,4 +1,4 @@
-package ru.yandex.praktikum.project.server;
+package ru.yandex.praktikum.project.main.server;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 

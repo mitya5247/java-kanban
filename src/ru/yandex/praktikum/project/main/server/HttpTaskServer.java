@@ -1,21 +1,19 @@
-package ru.yandex.praktikum.project.server;
+package ru.yandex.praktikum.project.main.server;
 
 import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import ru.yandex.praktikum.project.engine.FileBackedTasksManager;
-import ru.yandex.praktikum.project.client.KVTaskClient;
-import ru.yandex.praktikum.project.store.Epic;
-import ru.yandex.praktikum.project.store.SubTask;
-import ru.yandex.praktikum.project.store.Task;
+import ru.yandex.praktikum.project.main.engine.FileBackedTasksManager;
+import ru.yandex.praktikum.project.main.store.Epic;
+import ru.yandex.praktikum.project.main.store.SubTask;
+import ru.yandex.praktikum.project.main.store.Task;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
-import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.MissingFormatArgumentException;
 

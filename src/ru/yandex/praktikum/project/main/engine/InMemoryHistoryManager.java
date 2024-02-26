@@ -1,6 +1,6 @@
-package ru.yandex.praktikum.project.engine;
+package ru.yandex.praktikum.project.main.engine;
 
-import ru.yandex.praktikum.project.store.Task;
+import ru.yandex.praktikum.project.main.store.Task;
 
 import java.util.*;
 

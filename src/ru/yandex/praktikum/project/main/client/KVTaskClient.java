@@ -1,4 +1,4 @@
-package ru.yandex.praktikum.project.client;
+package ru.yandex.praktikum.project.main.client;
 
 import java.io.IOException;
 import java.net.URI;

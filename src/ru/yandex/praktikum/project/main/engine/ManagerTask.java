@@ -1,8 +1,8 @@
-package ru.yandex.praktikum.project.engine;
+package ru.yandex.praktikum.project.main.engine;
 
-import ru.yandex.praktikum.project.store.Epic;
-import ru.yandex.praktikum.project.store.SubTask;
-import ru.yandex.praktikum.project.store.Task;
+import ru.yandex.praktikum.project.main.store.Epic;
+import ru.yandex.praktikum.project.main.store.SubTask;
+import ru.yandex.praktikum.project.main.store.Task;
 
 import java.util.List;
 

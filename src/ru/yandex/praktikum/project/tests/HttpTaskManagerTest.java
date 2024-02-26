@@ -4,11 +4,11 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.yandex.praktikum.project.engine.HttpTaskManager;
-import ru.yandex.praktikum.project.server.KVServer;
-import ru.yandex.praktikum.project.store.Epic;
-import ru.yandex.praktikum.project.store.SubTask;
-import ru.yandex.praktikum.project.store.Task;
+import ru.yandex.praktikum.project.main.engine.HttpTaskManager;
+import ru.yandex.praktikum.project.main.server.KVServer;
+import ru.yandex.praktikum.project.main.store.Epic;
+import ru.yandex.praktikum.project.main.store.SubTask;
+import ru.yandex.praktikum.project.main.store.Task;
 
 import java.io.File;
 import java.io.IOException;

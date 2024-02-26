@@ -1,7 +1,7 @@
 package ru.yandex.praktikum.project;
 
-import ru.yandex.praktikum.project.engine.*;
-import ru.yandex.praktikum.project.store.*;
+import ru.yandex.praktikum.project.main.engine.*;
+import ru.yandex.praktikum.project.main.store.*;
 
 import java.time.LocalDateTime;
 
